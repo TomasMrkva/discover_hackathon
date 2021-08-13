@@ -9,6 +9,7 @@ var pictures = ['https://www.nme.com/wp-content/uploads/2020/05/GettyImages-1134
 var numRows = 2
 var rows = []
 
+
 function App() {
 
   const [modalShow, setModalShow] = React.useState(false);
