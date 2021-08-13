@@ -1,7 +1,6 @@
 import './App.css';
 import React from 'react'
-import Button from 'react-bootstrap/Button';
-import MyVerticallyCenteredModal from './Popup'
+import Popup from './Popup'
 import { useState } from 'react';
 
 import firebase from "firebase/app";
@@ -37,17 +36,20 @@ function App() {
 
   db.collection("posts").get().then((querySnapshot )=>{
     var build = []
-  
+
     querySnapshot.forEach((doc) => {
       console.log(doc.data().image);
       build.push(doc.data())
     });
-  
+
     setPosts(build)
   })
 
-  function imageClick(props) {
+  const [modalData, setModalData] = React.useState(null);
+
+  function imageClick(post) {
     setModalShow(true)
+    setModalData(post)
   }
 
   rows = []
@@ -68,17 +70,18 @@ function App() {
   }
 
   return (
-    <div class = 'div'>
-    <MyVerticallyCenteredModal show={modalShow} onHide={() => setModalShow(false)}/>
-      {rows.map((row,i) => 
-        <div key = {i}>
-          {row.map((post,k) => 
-            <img src={post.image} onClick={imageClick} class='cover' key = {k}/>
+    <div className = 'div'>
+       {modalData && <Popup show={modalShow} onHide={() => setModalShow(false)} data={modalData}/>}
+      { rows.map((row,i) => 
+        <div>
+          { row.map( (post,k) => 
+            <>
+              <img src={post.image} onClick={() => imageClick(post)} className='cover' key = {k}/>
+            </>
           )}
         </div>
       )}
     </div>
-    // <Test/>
   );
 }
  

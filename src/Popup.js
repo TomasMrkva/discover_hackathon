@@ -1,8 +1,8 @@
 import { Modal, Button } from "react-bootstrap";
 import React from 'react'
+import Profile from './Profile'
 
-
-export default function MyVerticallyCenteredModal(props) {
+export default function Popup(props) {
     return (
       <Modal
         {...props}
@@ -11,17 +11,12 @@ export default function MyVerticallyCenteredModal(props) {
         centered
       >
         <Modal.Header closeButton>
-          <Modal.Title id="contained-modal-title-vcenter">
-            Modal heading
+          <Modal.Title>
+          <h4>{props.data.title}</h4>
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <h4>Centered Modal</h4>
-          <p>
-            Cras mattis consectetur purus sit amet fermentum. Cras justo odio,
-            dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta ac
-            consectetur ac, vestibulum at eros.
-          </p>
+            <Profile img={props.data.image} message={props.data.message}/>  
         </Modal.Body>
         <Modal.Footer>
           <Button onClick={props.onHide}>Close</Button>
