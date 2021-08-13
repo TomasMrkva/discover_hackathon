@@ -70,17 +70,20 @@ function App() {
   }
 
   return (
-    <div className = 'div'>
-       {modalData && <Popup show={modalShow} onHide={() => setModalShow(false)} data={modalData}/>}
-      { rows.map((row,i) => 
-        <div>
-          { row.map( (post,k) => 
-            <>
-              <img src={post.image} onClick={() => imageClick(post)} className='cover' key = {k}/>
-            </>
-          )}
-        </div>
-      )}
+    <div>
+      <img className = 'discover' src = "https://www.investopedia.com/thmb/JPZyTxQvXhP0EA7TQumPMJPQzWc=/1280x720/filters:fill(auto,1)/Discover-logo-28a70026a79d4023adafb0f5e2e773cf.jpg"/>
+      <div className = 'div'>
+        {modalData && <Popup show={modalShow} onHide={() => setModalShow(false)} data={modalData}/>}
+        { rows.map((row,i) => 
+          <div>
+            { row.map( (post,k) => 
+              <>
+                <img src={post.image} onClick={() => imageClick(post)} className = 'tile' key = {k}/>
+              </>
+            )}
+          </div>
+        )}
+      </div>
     </div>
   );
 }

@@ -1,6 +1,8 @@
 import { Modal, Button } from "react-bootstrap";
 import React from 'react'
 import Profile from './Profile'
+import './Popup.css';
+
 
 export default function Popup(props) {
     return (

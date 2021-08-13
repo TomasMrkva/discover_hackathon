@@ -1,3 +1,7 @@
+body {
+  background-color: rgb(5, 84, 110);
+}
+
 .App {
   text-align: center;
 }
@@ -37,17 +41,27 @@
   }
 }
 
-img{
+.tile{
   object-fit: cover;
   width: 34vh;
   height: 34vh;
   
 }
 
-img:hover{
+.tile:hover{
   opacity: 0.5;
 }
 
-div {
-  white-space:nowrap;   
-  }
+.div, .discover{
+  position: absolute;
+}
+
+.div {
+  white-space:nowrap;
+  z-index: 2;
+}
+
+.discover{
+  z-index: 1;
+  width: 100vh
+}
