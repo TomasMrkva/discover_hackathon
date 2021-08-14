@@ -11,6 +11,7 @@ export default function FriendLy({img, message}) {
   function Avatar(props) {
     var avatarStyle = {
       marginLeft: 12,
+      marginRight: 12,
       width: 150,
       height: 150,
       borderRadius: "50%",
