@@ -1,7 +1,8 @@
 img{
   object-fit: cover;
   width: 32vh;
-  height: 30.3vh;
+  height: 32vh;
+  max-width: 40vh;
   
 }
 
@@ -9,3 +10,33 @@ img:hover{
   opacity: 0.5;
 }
 
+#image {
+  flex-grow: 5
+}
+
+.header {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;  
+  text-align: center;
+}
+
+.footer {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  color: white;
+  text-align: center;
+}
+
+.search-container {
+  display: flex;
+  justify-content: center;
+  display: flex;
+  flex-wrap: wrap;
+  /* align-items: center; */
+  /* position: -webkit-sticky; /* Safari */
+  /* position: sticky; */
+}

@@ -16,8 +16,6 @@ function App() {
   const [loading, setLoading] = useState(true);
 
   const ref =  firebase.firestore().collection('posts')
-  let numRows = 3
-  let rows = []
 
   function getPosts() {
     setLoading(true)
@@ -73,33 +71,21 @@ function App() {
     }
   }
 
-  let row = 0
-  for(var i = 0; i<posts.length; i++){
-    //Add a row
-    if(rows.length <= row){
-      rows.push([]);
-    }
-
-    //Add to a row
-    rows[row].push(posts[i]);
-
-    //Increment or Reset
-    row = numRows-1 === row ? 0 : row+1
-  }
-
   function Collage() {
     return(
-      rows.map((row,i) => 
-        <div key={i}>
-          { row.map( (post,k) => 
-            containsValue(post) && <img src={post.image} onClick={() => imageClick(post)} className='cover' key = {k}/>
-          )}
-        </div>
-      )
+      <div className="search-container">
+      { posts.map((post,i) => {
+        return(
+          containsValue(post) && <img src={post.image} id='image' onClick={() => imageClick(post)} key = {i}/> 
+        )   
+      })}
+      </div>
     )
   }
 
-  const Loading = () => <div style={{textAlign:'center'}}><Spinner animation="border" variant="primary" /></div>
+  function Loading() {
+    return<div style={{textAlign:'center'}}><Spinner animation="border" variant="primary" /></div>
+  } 
 
 
   return (
