@@ -7,15 +7,17 @@ export default function AddPost(props) {
     const [title, setTitle] = useState('');
     const [message, setMessage] = useState('');
     const [image, setImage] = useState('');
+    const {addPost, ...rest} = props
+
 
     function submitHandler() {
-        props.addPost(title,message,image)
+        addPost(title,message,image)
         props.onHide()
     }
 
     return (
       <Modal
-        {...props}
+        {...rest}
         size="lg"
         aria-labelledby="contained-modal-title-vcenter"
         centered
