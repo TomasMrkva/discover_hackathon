@@ -1,61 +1,77 @@
 import './App.css';
 import React from 'react'
 import Popup from './Popup'
-import { useState } from 'react';
-
-import firebase from "firebase/app";
-// If you are using v7 or any earlier version of the JS SDK, you should import firebase using namespace import
-// import * as firebase from "firebase/app"
-
-// If you enabled Analytics in your project, add the Firebase SDK for Analytics
-import "firebase/analytics";
-
-// Add the Firebase products that you want to use
-import "firebase/auth";
-import "firebase/firestore";
-
-firebase.initializeApp({
-  apiKey: "AIzaSyCdEYKNU8_Nv1BHckau8FQ82vTnji4YL-k",
-  authDomain: "logintest-bfbbc.firebaseapp.com",
-  projectId: "logintest-bfbbc"
-});
-
-var db = firebase.firestore();
-
-//var posts = [{id:0, image: 'https://www.nme.com/wp-content/uploads/2020/05/GettyImages-1134174735.jpg', title: 'To Pimp a Butterfly', message: 'The best album ever made', dateTime:'29/03/21'},{id:1,image: 'https://bleedingcool.com/wp-content/uploads/2020/10/S5e40_Finn_Jake_and_BMO_sitting-1200x900.jpg', title: 'To Pimp a Butterfly', message: 'The best album ever made', dateTime:'29/03/21'}]
-//const [posts, setPosts] = useState([]);
-
-var numRows = 3
-var rows = []
-
+import AddPost from './AddPost';
+import { useState, useEffect } from 'react';
+import firebase from './firebase'
+import { Button, Form, Spinner } from "react-bootstrap"
 
 function App() {
 
   const [modalShow, setModalShow] = React.useState(false);
-  const [posts, setPosts] = useState([]);
-
-  db.collection("posts").get().then((querySnapshot )=>{
-    var build = []
-
-    querySnapshot.forEach((doc) => {
-      console.log(doc.data().image);
-      build.push(doc.data())
-    });
-
-    setPosts(build)
-  })
-
+  const [newPostShow, setNewPostShow] = React.useState(false);
   const [modalData, setModalData] = React.useState(null);
+  const [posts, setPosts] = useState([]);
+  const [search, setSearch] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  const ref =  firebase.firestore().collection('posts')
+  let numRows = 3
+  let rows = []
+
+  function getPosts() {
+    setLoading(true)
+    ref.onSnapshot( (querySnapshot) => {
+      const items = []
+      querySnapshot.forEach(doc => {
+        items.push({...doc.data(), id: doc.id})
+      });
+      setPosts(items)
+    })
+    setLoading(false)
+  }
+
+  function addPost(title, message, image) {
+    ref.doc().set({
+        title: title,
+        message:message,
+        image: image
+    })
+    .then(() => {
+        console.log("Document successfully written!");
+    })
+    .catch((error) => {
+        console.error("Error writing document: ", error);
+    });
+  }
+
+  function deletePost(post) {
+    ref.doc(post.id).delete()
+    .then(() => {
+      console.log("Document successfully deleted!");
+    }).catch((error) => {
+      console.error("Error removing document: ", error);
+    });
+  }
+
+  useEffect(() => {
+    getPosts()
+  },[])
 
   function imageClick(post) {
     setModalShow(true)
     setModalData(post)
   }
 
-  rows = []
+  function containsValue(post) {
+    if (search !== '') {
+      return Object.values(post).some( value => value.toLowerCase().includes(search.toString().toLowerCase()))
+    } else {
+      return true
+    }
+  }
 
-  var row = 0
-
+  let row = 0
   for(var i = 0; i<posts.length; i++){
     //Add a row
     if(rows.length <= row){
@@ -66,21 +82,31 @@ function App() {
     rows[row].push(posts[i]);
 
     //Increment or Reset
-    row = numRows-1 == row ? 0 : row+1
+    row = numRows-1 === row ? 0 : row+1
   }
 
-  return (
-    <div className = 'div'>
-       {modalData && <Popup show={modalShow} onHide={() => setModalShow(false)} data={modalData}/>}
-      { rows.map((row,i) => 
-        <div>
+  function Collage() {
+    return(
+      rows.map((row,i) => 
+        <div key={i}>
           { row.map( (post,k) => 
-            <>
-              <img src={post.image} onClick={() => imageClick(post)} className='cover' key = {k}/>
-            </>
+            containsValue(post) && <img src={post.image} onClick={() => imageClick(post)} className='cover' key = {k}/>
           )}
         </div>
-      )}
+      )
+    )
+  }
+
+  const Loading = () => <div style={{textAlign:'center'}}><Spinner animation="border" variant="primary" /></div>
+
+
+  return (
+    <div className="d-grid">
+      <Form.Control style={{marginTop: 5, marginBottom: 5}} type="text" placeholder="Search here" size="lg" value={search} onChange={(event) => setSearch(event.target.value)}/>
+      { modalData && <Popup show={modalShow} onHide={() => setModalShow(false)} data={modalData} deletePost={deletePost}/>}
+      { newPostShow && <AddPost show={newPostShow} onHide={() => setNewPostShow(false)} addPost={addPost}/>}
+      { loading ? <Loading/> : <Collage/> }
+      <Button style={{marginTop: 5, marginBottom: 5}} size="lg" onClick={() => setNewPostShow(true)}> Add a post </Button>
     </div>
   );
 }
