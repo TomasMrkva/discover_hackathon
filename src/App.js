@@ -28,7 +28,9 @@ function App() {
       });
       setPosts(items)
     })
-    setLoading(false)
+    setTimeout(function () {
+      setLoading(false)
+    }, 100);
   }
 
   function addPost(title, message, image) {
@@ -103,9 +105,9 @@ function App() {
   return (
     <div className="d-grid">
       <Form.Control style={{marginTop: 5, marginBottom: 5}} type="text" placeholder="Search here" size="lg" value={search} onChange={(event) => setSearch(event.target.value)}/>
+      { loading ? <Loading/> : <Collage/> }
       { modalData && <Popup show={modalShow} onHide={() => setModalShow(false)} data={modalData} deletePost={deletePost}/>}
       { newPostShow && <AddPost show={newPostShow} onHide={() => setNewPostShow(false)} addPost={addPost}/>}
-      { loading ? <Loading/> : <Collage/> }
       <Button style={{marginTop: 5, marginBottom: 5}} size="lg" onClick={() => setNewPostShow(true)}> Add a post </Button>
     </div>
   );
