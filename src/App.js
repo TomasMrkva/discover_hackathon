@@ -94,8 +94,7 @@ export default function App() {
       <div className="search-container">
       { posts.map((post,i) => {
         return(
-          containsValue(post)
-          && <Image key={i} post={post} imageClick={imageClick} />
+          containsValue(post) && <Image key={i} post={post} imageClick={imageClick} />
           )
         })}
       </div>
@@ -108,7 +107,7 @@ export default function App() {
   
   function containsValue(post) {
     if (search !== '') {
-      return Object.values(post).some( value => value.toLowerCase().trim().includes(search.toString().toLowerCase().trim()))
+      return Object.values(post).map(val => val.toString()).some( value => value.toLowerCase().trim().includes(search.toString().toLowerCase().trim()))
     } else {
       return true
     }
