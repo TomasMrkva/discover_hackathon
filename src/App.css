@@ -5,14 +5,25 @@ img{
   max-width: 40vh;
   
 }
-
 img:hover{
   opacity: 0.5;
 }
 
 #image {
-  flex-grow: 5
+  flex-grow: 2
 }
+
+.hidden {
+  background-color: silver;
+}
+
+/* .form-switch{
+  margin-top: 10;
+  margin-bottom: 10;
+  margin-right: 2;   
+  display: flex; 
+  justify-content: center
+} */
 
 .header {
   position: fixed;

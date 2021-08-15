@@ -1,6 +1,7 @@
 import './App.css';
 import Popup from './Popup'
 import AddPost from './AddPost';
+import Image from './Image'
 import firebase from './firebase'
 import React, { useState, useEffect } from 'react'
 import { Button, Form, Spinner } from "react-bootstrap"
@@ -11,7 +12,7 @@ export default function App() {
   const [newPostShow, setNewPostShow] = useState(false);
   const [popupData, setPopupData] = useState(null);
   const [posts, setPosts] = useState([]);
-  const [search, setSearch] = useState([]);
+  const [search, setSearch] = useState('');
   const [loading, setLoading] = useState(true);
 
   const ref =  firebase.firestore().collection('posts')
@@ -26,12 +27,22 @@ export default function App() {
       setPosts(items)
     })
     setLoading(false)
-    // setTimeout(function () {
-    //   setLoading(false)
-    // }, 100);
   }
 
-  function addPost(title, message, image) {
+  async function uploadImage(file) {
+    const storageRef = firebase.storage().ref()
+    const fileRef = storageRef.child(file.name)
+    await fileRef.put(file)
+    return await fileRef.getDownloadURL()
+  }
+
+  async function addPost(title, message, imgData) {
+    setLoading(true)
+    let image;
+    (typeof imgData === 'string' || imgData instanceof String)
+    ? image = imgData
+    : image = await uploadImage(imgData)
+    
     ref.doc().set({
         title: title,
         message:message,
@@ -43,15 +54,18 @@ export default function App() {
     .catch((error) => {
         console.error("Error writing document: ", error);
     });
+    setLoading(false)
   }
 
   function deletePost(post) {
+    setLoading(true)
     ref.doc(post.id).delete()
     .then(() => {
       console.log("Document successfully deleted!");
     }).catch((error) => {
       console.error("Error removing document: ", error);
     });
+    setLoading(false)
   }
 
   useEffect(() => getPosts(),[]) // eslint-disable-line react-hooks/exhaustive-deps
@@ -59,7 +73,7 @@ export default function App() {
   function imageClick(post) {
     setModalShow(true)
     setPopupData(post)
-    console.log(process.env.REACT_APP_FIREBASE_KEY)
+    console.log(process.env.REACT_APP_FIREBASE_API_KEY)
   }
 
   function Collage() {
@@ -67,7 +81,8 @@ export default function App() {
       <div className="search-container">
       { posts.map((post,i) => {
         return(
-          containsValue(post) && <img src={post.image} alt="" id='image' onClick={() => imageClick(post)} key = {i}/>
+          containsValue(post)
+          && <Image key={i} post={post} imageClick={imageClick} />
           )
         })}
       </div>
@@ -75,7 +90,7 @@ export default function App() {
   }
   
   function Loading() {
-    return<div style={{textAlign:'center'}}><Spinner animation="border" variant="primary" /></div>
+    return <div style={{textAlign:'center'}}><Spinner animation="border" variant="primary" /></div>
   } 
   
   function containsValue(post) {
@@ -95,5 +110,5 @@ export default function App() {
       <Button style={{marginTop: 5, marginBottom: 5}} size="lg" onClick={() => setNewPostShow(true)}> Add a post </Button>
     </div>
   );
-  
+
 }

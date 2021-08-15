@@ -1,17 +1,36 @@
 import { Modal, Button } from "react-bootstrap";
 import NewPostForm from './Form'
-import React, {useState} from 'react'
+import React, {useState, useRef} from 'react'
 
 export default function AddPost(props) {
 
+    const fileInput = useRef(null);
     const [title, setTitle] = useState('');
     const [message, setMessage] = useState('');
     const [image, setImage] = useState('');
+
     const {addPost, ...rest} = props
 
+    function checkURL(url) {
+      return(url.match(/\.(jpeg|jpg|gif|png)$/) !== null);
+    }
 
     function submitHandler() {
-        addPost(title,message,image)
+        if (fileInput.current != null) {
+          if(fileInput.current.files[0] == null) {
+            alert('You need to upload a picture with your post!')
+            return
+          } else {
+            addPost(title, message, fileInput.current.files[0])
+            console.log(fileInput.current.files[0].name)
+          }
+        } else if (!checkURL(image)) {
+          alert('You need to upload a valid URL with your post!')
+          return
+        } else {
+          addPost(title, message, image)
+          // console.log(image)
+        }
         props.onHide()
     }
 
@@ -29,7 +48,7 @@ export default function AddPost(props) {
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
-            <NewPostForm title={title} setTitle={setTitle} message={message} setMessage={setMessage} image={image} setImage={setImage} />
+            <NewPostForm title={title} setTitle={setTitle} message={message} setMessage={setMessage} image={image} setImage={setImage} fileInput={fileInput} />
         </Modal.Body>
         <Modal.Footer>
           <Button onClick={submitHandler}>Submit</Button>
