@@ -22,14 +22,12 @@ export default function AddPost(props) {
             return
           } else {
             addPost(title, message, fileInput.current.files[0])
-            console.log(fileInput.current.files[0].name)
           }
         } else if (!checkURL(image)) {
           alert('You need to upload a valid URL with your post!')
           return
         } else {
           addPost(title, message, image)
-          // console.log(image)
         }
         props.onHide()
     }

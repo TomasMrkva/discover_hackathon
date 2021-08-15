@@ -36,17 +36,18 @@ export default function App() {
     return await fileRef.getDownloadURL()
   }
 
+  const isString = (val) => typeof val === 'string' || val instanceof String
+
   async function addPost(title, message, imgData) {
     setLoading(true)
     let image;
-    (typeof imgData === 'string' || imgData instanceof String)
-    ? image = imgData
-    : image = await uploadImage(imgData)
-    
+    isString(imgData) ? image = imgData : image = await uploadImage(imgData)
+
     ref.doc().set({
         title: title,
-        message:message,
-        image: image
+        message: message,
+        image: image,
+        store: !isString(imgData)
     })
     .then(() => {
         console.log("Document successfully written!");
@@ -62,10 +63,23 @@ export default function App() {
     ref.doc(post.id).delete()
     .then(() => {
       console.log("Document successfully deleted!");
-    }).catch((error) => {
+      post.store && deleteImage(post)
+    })
+    .catch((error) => {
       console.error("Error removing document: ", error);
     });
     setLoading(false)
+  }
+
+  function deleteImage(post) {
+      var desertRef = firebase.storage().refFromURL(post.image)
+      desertRef.delete()
+      .then(() => {
+        console.log('deleted image from storage successfully')
+      })
+      .catch( 
+        () => console.log('error occured on the storage cloud')
+      );
   }
 
   useEffect(() => getPosts(),[]) // eslint-disable-line react-hooks/exhaustive-deps
@@ -73,7 +87,6 @@ export default function App() {
   function imageClick(post) {
     setModalShow(true)
     setPopupData(post)
-    console.log(process.env.REACT_APP_FIREBASE_API_KEY)
   }
 
   function Collage() {
