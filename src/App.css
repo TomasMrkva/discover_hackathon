@@ -36,7 +36,4 @@ img:hover{
   justify-content: center;
   display: flex;
   flex-wrap: wrap;
-  /* align-items: center; */
-  /* position: -webkit-sticky; /* Safari */
-  /* position: sticky; */
 }

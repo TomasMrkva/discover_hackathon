@@ -1,16 +1,15 @@
 import './App.css';
-import React from 'react'
 import Popup from './Popup'
 import AddPost from './AddPost';
-import { useState, useEffect } from 'react';
 import firebase from './firebase'
+import React, { useState, useEffect } from 'react'
 import { Button, Form, Spinner } from "react-bootstrap"
 
-function App() {
+export default function App() {
 
-  const [modalShow, setModalShow] = React.useState(false);
-  const [newPostShow, setNewPostShow] = React.useState(false);
-  const [modalData, setModalData] = React.useState(null);
+  const [modalShow, setModalShow] = useState(false);
+  const [newPostShow, setNewPostShow] = useState(false);
+  const [popupData, setPopupData] = useState(null);
   const [posts, setPosts] = useState([]);
   const [search, setSearch] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -26,9 +25,10 @@ function App() {
       });
       setPosts(items)
     })
-    setTimeout(function () {
-      setLoading(false)
-    }, 100);
+    setLoading(false)
+    // setTimeout(function () {
+    //   setLoading(false)
+    // }, 100);
   }
 
   function addPost(title, message, image) {
@@ -54,21 +54,12 @@ function App() {
     });
   }
 
-  useEffect(() => {
-    getPosts()
-  },[])
+  useEffect(() => getPosts(),[]) // eslint-disable-line react-hooks/exhaustive-deps
 
   function imageClick(post) {
     setModalShow(true)
-    setModalData(post)
-  }
-
-  function containsValue(post) {
-    if (search !== '') {
-      return Object.values(post).some( value => value.toLowerCase().includes(search.toString().toLowerCase()))
-    } else {
-      return true
-    }
+    setPopupData(post)
+    console.log(process.env.REACT_APP_FIREBASE_KEY)
   }
 
   function Collage() {
@@ -76,27 +67,33 @@ function App() {
       <div className="search-container">
       { posts.map((post,i) => {
         return(
-          containsValue(post) && <img src={post.image} id='image' onClick={() => imageClick(post)} key = {i}/> 
-        )   
-      })}
+          containsValue(post) && <img src={post.image} alt="" id='image' onClick={() => imageClick(post)} key = {i}/>
+          )
+        })}
       </div>
     )
   }
-
+  
   function Loading() {
     return<div style={{textAlign:'center'}}><Spinner animation="border" variant="primary" /></div>
   } 
-
+  
+  function containsValue(post) {
+    if (search !== '') {
+      return Object.values(post).some( value => value.toLowerCase().trim().includes(search.toString().toLowerCase().trim()))
+    } else {
+      return true
+    }
+  }
 
   return (
     <div className="d-grid">
       <Form.Control style={{marginTop: 5, marginBottom: 5}} type="text" placeholder="Search here" size="lg" value={search} onChange={(event) => setSearch(event.target.value)}/>
       { loading ? <Loading/> : <Collage/> }
-      { modalData && <Popup show={modalShow} onHide={() => setModalShow(false)} data={modalData} deletePost={deletePost}/>}
+      { popupData && <Popup show={modalShow} onHide={() => setModalShow(false)} data={popupData} deletePost={deletePost}/>}
       { newPostShow && <AddPost show={newPostShow} onHide={() => setNewPostShow(false)} addPost={addPost}/>}
       <Button style={{marginTop: 5, marginBottom: 5}} size="lg" onClick={() => setNewPostShow(true)}> Add a post </Button>
     </div>
   );
+  
 }
- 
-export default App;

@@ -22,13 +22,16 @@ export default function Popup(props) {
           <h4>{props.data.title}</h4>
           </Modal.Title>
         </Modal.Header>
+
         <Modal.Body>
             <Profile img={data.image} message={data.message}/>  
         </Modal.Body>
+
         <Modal.Footer>
           <Button variant="danger" onClick={deleteHandler}>Delete</Button>
           <Button onClick={props.onHide}>Close</Button>
         </Modal.Footer>
+        
       </Modal>
     );
 }
