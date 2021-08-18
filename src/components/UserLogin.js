@@ -10,7 +10,7 @@ export function SignIn() {
     const history = useHistory()
 
     const handleOnClick = async () => {
-        await signIn().catch(error => console.log('sign in error occured'))
+        await signIn().catch(error => console.log(error))
         history.push('/')
     }
 
