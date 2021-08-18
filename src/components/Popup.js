@@ -4,10 +4,10 @@ import Profile from './Profile'
 
 export default function Popup(props) {
 
-  const {data, deletePost, ...rest} = props
+  const {data, deletePost, setLoading, ...rest} = props
 
   function deleteHandler() {
-    props.deletePost(props.data)
+    props.deletePost(props.data, setLoading)
     props.onHide()
   } 
 

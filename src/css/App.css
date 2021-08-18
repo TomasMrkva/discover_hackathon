@@ -17,14 +17,6 @@ img:hover{
   background-color: silver;
 }
 
-/* .form-switch{
-  margin-top: 10;
-  margin-bottom: 10;
-  margin-right: 2;   
-  display: flex; 
-  justify-content: center
-} */
-
 .header {
   position: fixed;
   left: 0;
@@ -45,6 +37,5 @@ img:hover{
 .search-container {
   display: flex;
   justify-content: center;
-  display: flex;
   flex-wrap: wrap;
 }

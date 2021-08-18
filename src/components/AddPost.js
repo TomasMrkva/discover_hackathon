@@ -9,7 +9,7 @@ export default function AddPost(props) {
     const [message, setMessage] = useState('');
     const [image, setImage] = useState('');
 
-    const {addPost, ...rest} = props
+    const {addPost, setLoading, ...rest} = props
 
     function checkURL(url) {
       return(url.match(/\.(jpeg|jpg|gif|png)$/) !== null);
@@ -21,13 +21,13 @@ export default function AddPost(props) {
             alert('You need to upload a picture with your post!')
             return
           } else {
-            addPost(title, message, fileInput.current.files[0])
+            addPost(title, message, fileInput.current.files[0], setLoading)
           }
         } else if (!checkURL(image)) {
           alert('You need to upload a valid URL with your post!')
           return
         } else {
-          addPost(title, message, image)
+          addPost(title, message, image, setLoading)
         }
         props.onHide()
     }
