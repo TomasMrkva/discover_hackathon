@@ -34,7 +34,7 @@ export function SignOut() {
     }
     
     return (
-        <Button onClick={() =>handleOnClick()}>Sign out</Button>
+        <Button onClick={() => handleOnClick()}>Sign out</Button>
     )
 }
 

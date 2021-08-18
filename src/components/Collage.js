@@ -3,8 +3,6 @@ import Image from './Image'
 
 export default function Collage({posts, search, setModalShow, setPopupData}) {
 
-    console.log('hello')
-
     const imageClick = (post) => {
         setModalShow(true)
         setPopupData(post)

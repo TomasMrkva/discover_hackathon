@@ -1,4 +1,5 @@
 import React from 'react'
+import './css/App.css';
 import MainPage from './components/MainPage'
 import PriavateRoute from './components/PrivateRoute'
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
@@ -17,3 +18,4 @@ export default function App() {
   </Router>
   )
 }
+

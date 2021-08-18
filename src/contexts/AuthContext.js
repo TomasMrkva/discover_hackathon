@@ -1,7 +1,6 @@
 import React,{useContext, useState, useEffect} from 'react'
-import { Spinner, Container } from 'react-bootstrap'
 import { googleProvider, auth } from '../firebase'
-
+import Loading from '../components/Loading'
 
 const AuthContext = React.createContext()
 
@@ -23,12 +22,12 @@ export function AuthProvider({children}) {
 
     const value = {
         currentUser,
-        loading,
         signIn,
         signOut,
     }
 
     useEffect(() => {
+        setLoading(true)
         const unsubscribe = auth.onAuthStateChanged((user) => {
             setCurrentUser(user)
             setLoading(false)
@@ -37,27 +36,15 @@ export function AuthProvider({children}) {
     }, [])
 
 
-    if(loading) {
-        return (
-        <Container className="d-flex justify-content-center align-items-center" style={{minHeight: '100vh'}}>
-            <Spinner animation="border" role="status">
-                <span className="visually-hidden">Loading...</span>
-            </Spinner>
-        </Container>
-        )
-    } else {
-        return (
-            <>
-                { loading ? 
-                    <Spinner animation="border" role="status">
-                        <span className="visually-hidden">Loading...</span>
-                    </Spinner>
-                :
-                    <AuthContext.Provider value={value}>
-                        {children}
-                    </AuthContext.Provider>
-                }
-            </>
-        )
-    }
+    return (
+        <>
+            { loading ? 
+                <Loading />
+            :
+                <AuthContext.Provider value={value}>
+                    {children}
+                </AuthContext.Provider>
+            }
+        </>
+    )
 }
