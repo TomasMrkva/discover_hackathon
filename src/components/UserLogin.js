@@ -1,8 +1,11 @@
 import GoogleButton from 'react-google-button'
 import { useAuth } from '../contexts/AuthContext'
-import { Button, Container } from 'react-bootstrap'
+import { Container } from 'react-bootstrap'
 import { useHistory } from 'react-router'
 import { useEffect } from 'react'
+import IconButton from '@material-ui/core/IconButton';
+import ExitToAppIcon from '@material-ui/icons/ExitToApp';
+import { Tooltip } from '@material-ui/core'
 
 export function SignIn() {
 
@@ -34,7 +37,16 @@ export function SignOut() {
     }
     
     return (
-        <Button onClick={() => handleOnClick()}>Sign out</Button>
+        <Tooltip title="Sign Out">
+            <IconButton
+                edge="start"
+                color="inherit"
+                aria-label="avatar"
+                onClick={() => handleOnClick()}
+            >
+                <ExitToAppIcon />
+            </IconButton>
+        </Tooltip>
     )
 }
 
