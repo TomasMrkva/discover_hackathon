@@ -1,6 +1,9 @@
 import { Modal, Button } from "react-bootstrap";
 import NewPostForm from './Form'
 import React, {useState, useRef} from 'react'
+import { useAuth } from '../contexts/AuthContext'
+import { addPost } from '../firebase_operations';
+
 
 export default function AddPost(props) {
 
@@ -9,11 +12,12 @@ export default function AddPost(props) {
     const [message, setMessage] = useState('');
     const [image, setImage] = useState('');
 
-    const {addPost, setLoading, ...rest} = props
+    const {setLoading, ...rest} = props
+    const { currentUser } = useAuth()
 
-    function checkURL(url) {
-      return(url.match(/\.(jpeg|jpg|gif|png)$/) !== null);
-    }
+    // function checkURL(url) {
+    //   return(url.match(/\.(jpeg|jpg|gif|png)$/) !== null);
+    // }
 
     function submitHandler() {
         if (fileInput.current != null) {
@@ -21,13 +25,10 @@ export default function AddPost(props) {
             alert('You need to upload a picture with your post!')
             return
           } else {
-            addPost(title, message, fileInput.current.files[0], setLoading)
+            addPost(message, fileInput.current.files[0], setLoading, currentUser)
           }
-        } else if (!checkURL(image)) {
-          alert('You need to upload a valid URL with your post!')
-          return
         } else {
-          addPost(title, message, image, setLoading)
+          addPost(message, image, setLoading, currentUser)
         }
         props.onHide()
     }

@@ -1,15 +1,13 @@
-img{
-  object-fit: cover;
-  width: 32vh;
-  height: 32vh;
-  max-width: 40vh;
-  
-}
-img:hover{
-  opacity: 0.5;
+#image:hover{
+  opacity: 0.8;
+  cursor: pointer;
 }
 
 #image {
+  object-fit: cover;
+  width: 32vh;
+  height: 32vh;
+  max-width: 45vh;
   flex-grow: 2
 }
 
