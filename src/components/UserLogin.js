@@ -19,7 +19,7 @@ export function SignIn() {
     useEffect(() => document.body.style.backgroundImage = 'linear-gradient(-20deg, #b721ff 0%, #21d4fd 100%)', [])
     
     return (
-        <div className="d-flex justify-content-center align-items-center" style={{minHeight: '100vh'}}>
+        <div style={{display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '100vh'}}>
             <GoogleButton style={{fontSize: '18px'}}type="light" onClick={ () => handleOnClick() }>Sign in with google</GoogleButton>
         </div>
     )

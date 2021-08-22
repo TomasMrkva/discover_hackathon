@@ -8,9 +8,7 @@ export default function UnAuthorizedView() {
 
     return(
       <div 
-        className="d-flex justify-content-center align-items-center" 
-        style={{minHeight: '100vh', textAlign:'center', flexDirection:'column'}} >
-
+        style={{display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '100vh', textAlign:'center', flexDirection:'column'}} >
         <h1>Hello {currentUser.displayName}!</h1>
         <h2>Unfortunately, you are not authorized to use this website</h2>
         <SignOut/>
