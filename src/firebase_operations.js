@@ -39,8 +39,11 @@ function getPosts(setLoading, setPosts) {
     dbPosts.doc().set({
         message: message,
         image: image,
-        author: currentUser.displayName,
-        authorProfile: currentUser.providerData[0].photoURL,
+        author: {
+          email: currentUser.email, 
+          name: currentUser.displayName,
+          avatar: currentUser.providerData[0].photoURL
+        },
         dateTime: getDate(),
         dateTimeSort: getDateForSort(),
         store: !isString(imgData),
@@ -66,7 +69,7 @@ function getPosts(setLoading, setPosts) {
   }
 
   async function addLike(user, post, setLikes) {
-    console.log(post.id)
+    // console.log(post.id)
     const postRef = dbPosts.doc(post.id);
     try {
       await firebase.firestore().runTransaction(transaction => {

@@ -62,7 +62,7 @@ export default function ImageCard({show, onHide, post, setLoading}) {
       <CardHeader className={classes.header}
         avatar={
           <Avatar aria-label="post">
-             <img alt="avatar" src={currentUser.providerData[0].photoURL} style={{width: '100%', height: '100%'}}/>
+             <img alt="avatar" src={post.author.avatar} style={{width: '100%', height: '100%'}}/>
           </Avatar>
         }
         action={
@@ -70,7 +70,7 @@ export default function ImageCard({show, onHide, post, setLoading}) {
             <CloseIcon style={{color: 'black'}}/>
           </IconButton>
         }
-        title={post.author}
+        title={post.author.name}
         subheader={post.dateTime}
       />
 
@@ -104,9 +104,13 @@ export default function ImageCard({show, onHide, post, setLoading}) {
 
           <Typography color="textPrimary" component="p" style={{fontWeight: "600",}}>{likes.length} {likes.length === 1 ? 'Like' : 'Likes'}</Typography>
 
-          <IconButton aria-label="delete" onClick={deleteHandler} style={{color: 'black', marginLeft: 'auto'}}>
-            <DeleteIcon />
-          </IconButton>
+          { currentUser.email === post.author.email 
+            &&
+            <IconButton aria-label="delete" onClick={deleteHandler} style={{color: 'black', marginLeft: 'auto'}}>
+             <DeleteIcon />
+           </IconButton>
+          }
+         
         </CardActions>
       </div>
      
