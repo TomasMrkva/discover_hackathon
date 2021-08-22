@@ -128,7 +128,7 @@ export default function AddPost({show, onHide, setLoading}) {
           </label>
         </div>
         <div className={classes.imageContainer}>
-          <img className={classes.image} src={image ? URL.createObjectURL(image) : "placeholder.png"} alt="selected-image"/>
+          <img className={classes.image} src={image ? URL.createObjectURL(image) : "placeholder.png"} alt="selected"/>
         </div>
       </Dialog>
     </div>
