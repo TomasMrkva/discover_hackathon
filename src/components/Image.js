@@ -7,7 +7,7 @@ export default function Image({post, imageClick,...rest}) {
     return(
         <img
             key = {rest.key}
-            className={!loaded ? "" : "hidden"}
+            style={loaded ? {} : {display: 'none'}}
             src={post.image} 
             alt="" 
             id='image' 

@@ -5,14 +5,10 @@
 
 #image {
   object-fit: cover;
-  width: 32vh;
-  height: 32vh;
-  max-width: 45vh;
+  width: 31.5vh;
+  height: 31.5h;
+  max-width: 60vh;
   flex-grow: 2
-}
-
-.hidden {
-  background-color: silver;
 }
 
 .header {

@@ -1,58 +1,136 @@
-import { Modal, Button } from "react-bootstrap";
-import NewPostForm from './Form'
 import React, {useState, useRef} from 'react'
 import { useAuth } from '../contexts/AuthContext'
 import { addPost } from '../firebase_operations';
+import { makeStyles } from '@material-ui/core/styles';
+import TextField from '@material-ui/core/TextField';
+import Button from '@material-ui/core/Button';
+import Dialog from '@material-ui/core/Dialog';
+import AppBar from '@material-ui/core/AppBar';
+import Toolbar from '@material-ui/core/Toolbar';
+import IconButton from '@material-ui/core/IconButton';
+import Typography from '@material-ui/core/Typography';
+import CloseIcon from '@material-ui/icons/Close';
+import Slide from '@material-ui/core/Slide';
+import imageCompression from 'browser-image-compression';
 
 
-export default function AddPost(props) {
+const useStyles = makeStyles((theme) => ({
+  appBar: {
+    position: 'relative',
+    backgroundImage: 'linear-gradient(-20deg, rgb(183, 33, 255) 0%, rgb(33, 212, 253) 100%)'
+  },
+  title: {
+    marginLeft: theme.spacing(2),
+    flex: 1,
+  },
+  text: {
+    margin: theme.spacing(3)
+  },
+  input: {
+    display: "none"
+  },
+  button: {
+    textAlign: "end",
+    marginRight: theme.spacing(3)
+  },
+  imageContainer: {
+    marginTop: theme.spacing(10),
+    marginBottom: theme.spacing(3),
+    width: '75vw',
+    alignSelf: 'center',
+  },
+  image: {
+    width: '100%',
+    height: 'auto',
+    display: 'block'
+  }
+}));
 
+const Transition = React.forwardRef(function Transition(props, ref) {
+  return <Slide direction="up" ref={ref} {...props} />;
+});
+
+export default function AddPost({show, onHide, setLoading}) {
+    const classes = useStyles();
     const fileInput = useRef(null);
-    const [title, setTitle] = useState('');
     const [message, setMessage] = useState('');
-    const [image, setImage] = useState('');
+    const [image, setImage] = useState(null);
+    const [started, setStarted] = useState(false);
 
-    const {setLoading, ...rest} = props
     const { currentUser } = useAuth()
 
-    // function checkURL(url) {
-    //   return(url.match(/\.(jpeg|jpg|gif|png)$/) !== null);
-    // }
-
     function submitHandler() {
-        if (fileInput.current != null) {
-          if(fileInput.current.files[0] == null) {
-            alert('You need to upload a picture with your post!')
-            return
-          } else {
-            addPost(message, fileInput.current.files[0], setLoading, currentUser)
-          }
-        } else {
-          addPost(message, image, setLoading, currentUser)
+        if (!message) {
+          alert('You need to provide a message with your post!')
+          return
+        } else if (!image){
+          alert('You need to upload a picture with your post!')
+          return
         }
-        props.onHide()
+        addPost(message, image, setLoading, currentUser)
+        onHide()
+    }
+
+    async function handleFileSelected(event) {
+      const imageFile = event.target.files[0];
+      const options = {
+        maxSizeMB: 0.5,
+        maxWidthOrHeight: 1280,
+        useWebWorker: true
+      }
+      try {
+        const compressedFile = await imageCompression(imageFile, options);
+        setImage(compressedFile)
+      } catch (error) {
+        console.log(error);
+      }
+    }
+
+    function changeHandler(event) {
+      !started && setStarted(true)
+      setMessage(event.target.value)
     }
 
     return (
-      <Modal
-        {...rest}
-        size="lg"
-        aria-labelledby="contained-modal-title-vcenter"
-        centered
-        className="my-modal"
-      >
-        <Modal.Header closeButton>
-        <Modal.Title id="contained-modal-title-vcenter">
-          <h4>New Post</h4>
-          </Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-            <NewPostForm title={title} setTitle={setTitle} message={message} setMessage={setMessage} image={image} setImage={setImage} fileInput={fileInput} />
-        </Modal.Body>
-        <Modal.Footer>
-          <Button onClick={submitHandler}>Submit</Button>
-          <Button variant="danger" onClick={props.onHide}>Close</Button>
-        </Modal.Footer>
-      </Modal>
-    );
+    <div>
+      <Dialog fullScreen open={show} onClose={onHide} TransitionComponent={Transition}>
+        <AppBar className={classes.appBar}>
+          <Toolbar>
+            <IconButton edge="start" color="inherit" onClick={onHide} aria-label="close">
+              <CloseIcon />
+            </IconButton>
+            <Typography variant="h6" className={classes.title}>
+              Create a new post
+            </Typography>
+            <Button autoFocus color="inherit" onClick={submitHandler}>
+              upload
+            </Button>
+          </Toolbar>
+        </AppBar>
+        <TextField className={classes.text}
+          error={message === "" && started}
+          helperText={message === "" && started ? 'Message is requred!' : ''}        
+          id="filled-multiline-static"
+          label="Your message"
+          multiline
+          rows={4}
+          variant="filled"
+          value={message}
+          required
+          onChange={changeHandler}
+        />
+        <div className={classes.button}>
+          <input ref={fileInput} accept="image/*" className={classes.input} id="contained-button-file" type="file" onChange={handleFileSelected}/>
+          <label htmlFor="contained-button-file">
+            <Button variant="contained" color="primary" component="span">
+              Choose Image
+            </Button>
+          </label>
+        </div>
+        <div className={classes.imageContainer}>
+          <img className={classes.image} src={image ? URL.createObjectURL(image) : "placeholder.png"} alt="selected-image"/>
+        </div>
+      </Dialog>
+    </div>
+    )
 }

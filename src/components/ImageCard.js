@@ -99,7 +99,7 @@ export default function ImageCard({show, onHide, post, setLoading}) {
                       style={{color: 'tomato'}}
                       onClick={() => {addLike(currentUser, post, setLikes)}}
           >
-          {likes.includes(currentUser.email) ? <FavoriteIcon /> : <FavoriteBorderIcon/>}
+          { likes.includes(currentUser.email) ? <FavoriteIcon /> : <FavoriteBorderIcon/> }
           </IconButton>
 
           <Typography color="textPrimary" component="p" style={{fontWeight: "600",}}>{likes.length} {likes.length === 1 ? 'Like' : 'Likes'}</Typography>

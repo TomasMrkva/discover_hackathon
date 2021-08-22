@@ -17,7 +17,7 @@ export default function FabButton({clickHandler}) {
     const classes = useStyles();
     return (
         <Fab variant="extended" style={{backgroundColor: 'black', color: 'white'}} aria-label="add" className={classes.fab} onClick={clickHandler} elevation={4}>
-            Add Post
+            New Post
             <AddIcon style={{marginLeft: '5px'}}/>
         </Fab>
     );
