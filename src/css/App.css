@@ -5,9 +5,9 @@
 
 #image {
   object-fit: cover;
-  width: 31.5vh;
-  height: 31.5h;
-  max-width: 60vh;
+  width: 32vh;
+  height: 32vh;
+  max-width: 45vh;
   flex-grow: 2
 }
 
