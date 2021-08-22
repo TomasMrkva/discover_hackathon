@@ -1,6 +1,5 @@
 import GoogleButton from 'react-google-button'
 import { useAuth } from '../contexts/AuthContext'
-import { Container } from 'react-bootstrap'
 import { useHistory } from 'react-router'
 import { useEffect } from 'react'
 import IconButton from '@material-ui/core/IconButton';
@@ -20,9 +19,9 @@ export function SignIn() {
     useEffect(() => document.body.style.backgroundImage = 'linear-gradient(-20deg, #b721ff 0%, #21d4fd 100%)', [])
     
     return (
-        <Container className="d-flex justify-content-center align-items-center" style={{minHeight: '100vh'}}>
+        <div className="d-flex justify-content-center align-items-center" style={{minHeight: '100vh'}}>
             <GoogleButton style={{fontSize: '18px'}}type="light" onClick={ () => handleOnClick() }>Sign in with google</GoogleButton>
-        </Container>
+        </div>
     )
 }
 
