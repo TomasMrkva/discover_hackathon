@@ -77,13 +77,13 @@ function getPosts(setLoading, setPosts) {
           if (!doc.data().likes) {
             setLikes([{name: user.displayName, email: user.email}])
             transaction.set({
-              likes: [{name: user.displayName, email: user.email}]
+              likes: [{name: user.displayName, email: user.email, avatar: user.providerData[0].photoURL}]
             })
           } else {
             let totalLikes = doc.data().likes
             totalLikes.map(el => el.email).includes(user.email) 
             ? totalLikes = totalLikes.filter(el => el.email !== user.email) 
-            : totalLikes.push({name: user.displayName, email: user.email})
+            : totalLikes.push({name: user.displayName, email: user.email, avatar: user.providerData[0].photoURL})
             setLikes(totalLikes)
             transaction.update(postRef, { likes: totalLikes })
           }

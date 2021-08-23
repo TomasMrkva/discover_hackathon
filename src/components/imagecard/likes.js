@@ -47,6 +47,7 @@ export function LikesContent({post, dimensions}) {
 
     return(
         <ul style={{minWidth: dimensions.width, minHeight: dimensions.height}}>
+            
         </ul>
     )
 }
