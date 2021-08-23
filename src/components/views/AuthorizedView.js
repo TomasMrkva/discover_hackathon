@@ -15,7 +15,6 @@ export default function AuthorizedView() {
   const [posts, setPosts] = useState([]);
   const [search, setSearch] = useState('');
   const [loading, setLoading] = useState(true)
-  const [currentView, setCurrentView] = useState('main')
 
   useEffect(() => {
       document.body.style.backgroundImage = ''
@@ -28,7 +27,6 @@ export default function AuthorizedView() {
         { loading ? <Loading/> : <Collage search={search} posts={posts} setModalShow={setModalShow} setPopupData={setPopupData}/> }
         { popupData && 
           <ImageCard
-                 currentView={currentView}
                  show={modalShow} 
                  onHide={() => setModalShow(false)} 
                  post={popupData} 

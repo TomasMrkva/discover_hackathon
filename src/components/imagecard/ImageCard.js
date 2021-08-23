@@ -39,11 +39,15 @@ export default function ImageCard({show, onHide, post, setLoading}) {
     setTimeout(function(){ setCurrentView('main') }, 225);
   }
 
+  function onBack() {
+    setCurrentView('main')
+  }
+
   return (
     <Dialog PaperProps={ { style: { margin: 0, maxHeight: '100%' }} } open={show}  onClose={onHide} maxWidth='md'>
       
       { currentView === 'comments' ? <div/> 
-      : currentView === 'likes'    ? <LikesHeader onHide={hide}/>
+      : currentView === 'likes'    ? <LikesHeader onHide={hide} onBack={onBack}/>
       : <MainHeader post={post} onHide={hide}/>}
       
       <DialogContent>
