@@ -70,23 +70,22 @@ function getPosts(setLoading, setPosts) {
   }
 
   async function addLike(user, post, setLikes) {
-    // console.log(post.id)
     const postRef = dbPosts.doc(post.id);
     try {
       await firebase.firestore().runTransaction(transaction => {
         return transaction.get(postRef).then(doc => {
           if (!doc.data().likes) {
+            setLikes([{name: user.displayName, email: user.email}])
             transaction.set({
-              likes: [user.email]
+              likes: [{name: user.displayName, email: user.email}]
             })
-            setLikes([user.email])
           } else {
             let totalLikes = doc.data().likes
-            totalLikes.includes(user.email) 
-              ? totalLikes = totalLikes.filter(email => email !== user.email) 
-              : totalLikes.push(user.email)
-            transaction.update(postRef, { likes: totalLikes })
+            totalLikes.map(el => el.email).includes(user.email) 
+            ? totalLikes = totalLikes.filter(el => el.email !== user.email) 
+            : totalLikes.push({name: user.displayName, email: user.email})
             setLikes(totalLikes)
+            transaction.update(postRef, { likes: totalLikes })
           }
         })
       })

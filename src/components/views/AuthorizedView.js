@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import SearchAppBar from '../SearchAppBar'
-import ImageCard from '../ImageCard'
+import ImageCard from '../imagecard/ImageCard'
 import Collage from '../Collage'
 import AddPost from '../AddPost';
 import Loading from '../Loading'
@@ -15,6 +15,7 @@ export default function AuthorizedView() {
   const [posts, setPosts] = useState([]);
   const [search, setSearch] = useState('');
   const [loading, setLoading] = useState(true)
+  const [currentView, setCurrentView] = useState('main')
 
   useEffect(() => {
       document.body.style.backgroundImage = ''
@@ -26,7 +27,9 @@ export default function AuthorizedView() {
         <SearchAppBar search={search} setSearch={setSearch}/>
         { loading ? <Loading/> : <Collage search={search} posts={posts} setModalShow={setModalShow} setPopupData={setPopupData}/> }
         { popupData && 
-          <ImageCard show={modalShow} 
+          <ImageCard
+                 currentView={currentView}
+                 show={modalShow} 
                  onHide={() => setModalShow(false)} 
                  post={popupData} 
                  setLoading={setLoading}

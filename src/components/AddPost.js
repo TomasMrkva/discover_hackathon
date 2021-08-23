@@ -12,6 +12,8 @@ import Typography from '@material-ui/core/Typography';
 import CloseIcon from '@material-ui/icons/Close';
 import Slide from '@material-ui/core/Slide';
 import imageCompression from 'browser-image-compression';
+import { withStyles } from '@material-ui/core/styles';
+
 
 
 const useStyles = makeStyles((theme) => ({
@@ -30,8 +32,7 @@ const useStyles = makeStyles((theme) => ({
     display: "none"
   },
   button: {
-    textAlign: "end",
-    marginRight: theme.spacing(3)
+    textAlign: "center",
   },
   imageContainer: {
     marginTop: theme.spacing(10),
@@ -45,6 +46,18 @@ const useStyles = makeStyles((theme) => ({
     display: 'block'
   }
 }));
+
+const ColorButton = withStyles((theme) => ({
+  root: {
+    color: theme.palette.getContrastText('#000000'),
+    backgroundColor: '#000000',
+    '&:hover': {
+      backgroundColor: '#313131',
+    },
+    width: '75vw',
+  },
+}))(Button);
+
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -81,9 +94,7 @@ export default function AddPost({show, onHide, setLoading}) {
       try {
         const compressedFile = await imageCompression(imageFile, options);
         setImage(compressedFile)
-      } catch (error) {
-        console.log(error);
-      }
+      } catch (error) {console.log(error);}
     }
 
     function changeHandler(event) {
@@ -110,10 +121,10 @@ export default function AddPost({show, onHide, setLoading}) {
         <TextField className={classes.text}
           error={message === "" && started}
           helperText={message === "" && started ? 'Message is requred!' : ''}        
-          id="filled-multiline-static"
+          id="filled-multiline-flexible"
           label="Your message"
           multiline
-          rows={4}
+          maxRows={8}
           variant="filled"
           value={message}
           required
@@ -121,10 +132,10 @@ export default function AddPost({show, onHide, setLoading}) {
         />
         <div className={classes.button}>
           <input ref={fileInput} accept="image/*" className={classes.input} id="contained-button-file" type="file" onChange={handleFileSelected}/>
-          <label htmlFor="contained-button-file">
-            <Button variant="contained" color="primary" component="span">
+          <label htmlFor="contained-button-file" className={classes.button}>
+            <ColorButton variant="contained" color="primary" component="span">
               Choose Image
-            </Button>
+            </ColorButton>
           </label>
         </div>
         <div className={classes.imageContainer}>
