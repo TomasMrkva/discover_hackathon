@@ -47,7 +47,8 @@ function getPosts(setLoading, setPosts) {
         dateTime: getDate(),
         dateTimeSort: getDateForSort(),
         store: !isString(imgData),
-        likes: []
+        likes: [],
+        comments: []
     })
     .then(() => {
         console.log("Document successfully written!");
