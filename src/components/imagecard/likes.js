@@ -1,4 +1,4 @@
-import React from 'react'
+import React,{useEffect} from 'react'
 import { makeStyles } from '@material-ui/core/styles';
 import CardHeader from '@material-ui/core/CardHeader';
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
@@ -45,6 +45,12 @@ export function LikesHeader({onHide, onBack}) {
 }
 
 export function LikesContent({dimensions, likes}) {
+
+    useEffect(() =>{
+        var e = document.getElementById('content-page');
+        e.scrollTop = 0;
+    },[])
+
     return(
         <div style={{minWidth: dimensions.width, minHeight: dimensions.height+20.25}}>
             <List>

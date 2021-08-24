@@ -68,17 +68,18 @@ export function Message({post}) {
     )
 }
 
-export function MainFooter({post, currentView, setCurrentView, onHide, setLoading, likes, setLikes}) {
+export function MainFooter({post, currentView, setCurrentView, onHide, setLoading, likes, setLikes, comments, setComments}) {
     
     const classes = useStyles();
     const { currentUser } = useAuth()
     
     useEffect(() => {
         setLikes(post.likes)
+        setComments(post.comments)
         return () => {
             setLikes([])
         }   
-    },[post, setLikes])
+    },[post, setLikes, setComments])
 
     function deleteHandler() {
         deletePost(post, setLoading)
@@ -122,7 +123,7 @@ export function MainFooter({post, currentView, setCurrentView, onHide, setLoadin
                         style={{fontWeight: "600"}}  
                         onClick={() => currentView !=='comments' && setCurrentView('comments')}
                     >
-                        Comments
+                        {comments?.length} {comments?.length === 1 ? 'Comment' : 'Comments'}
                     </Typography>
                     {currentUser.email === post.author.email &&
                     <IconButton 

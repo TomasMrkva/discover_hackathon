@@ -38,6 +38,7 @@ export default function ImageCard({show, onHide, post, setLoading}) {
   const [refVisible, setRefVisible] = useState(false)
   const [currentView, setCurrentView] = useState('main')
   const [likes, setLikes] = useState([])
+  const [comments, setComments] = useState()
 
   useEffect(() => {
       if (!refVisible) 
@@ -66,8 +67,8 @@ export default function ImageCard({show, onHide, post, setLoading}) {
       : currentView === 'likes'    ? <LikesHeader onHide={hide} onBack={onBack}/>
       : <MainHeader post={post} onHide={hide}/>}
       
-      <DialogContent>
-        { currentView === 'comments' ? <CommentsContent dimensions={dimensions} post={post}/>
+      <DialogContent id="content-page">
+        { currentView === 'comments' ? <CommentsContent dimensions={dimensions} post={post} comments={comments} setComments={setComments}/>
         : currentView === 'likes'    ? <LikesContent dimensions={dimensions} likes={likes}/>
         : <img
               onDoubleClick={() => window.open(post.image, "_blank")}
@@ -87,6 +88,8 @@ export default function ImageCard({show, onHide, post, setLoading}) {
       </DialogContentText>
 
       <MainFooter 
+        comments={comments}
+        setComments={setComments}
         likes={likes}
         setLikes={setLikes}
         post={post}

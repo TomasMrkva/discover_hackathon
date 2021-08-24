@@ -92,14 +92,16 @@ export function CommentsHeader({onHide, onBack}) {
     )
 }
 
-export function CommentsContent({post, dimensions}) {
+export function CommentsContent({post, dimensions, comments, setComments}) {
 
-    const [comments, setComments] = useState();
+    // const [comments, setComments] = useState();
     const [typedComment, setTypedComment] = useState('');
     const classes = useStyles();
     const { currentUser } = useAuth()
 
     useEffect(() => {
+        var e = document.getElementById('content-page');
+        e.scrollTop = 0;
         const unsubscribe = getCommentsByPostId(post.id, setComments)
         return () => {
             unsubscribe()
