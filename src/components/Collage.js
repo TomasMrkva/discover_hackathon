@@ -9,6 +9,7 @@ export default function Collage({posts, search, setModalShow, setPopupData}) {
     }
 
     function containsValue(post) {
+      // console.log(Object.values(post))
         if (search !== '') {
           return Object.values(post).map(val => val.toString()).some( value => value.toLowerCase().trim().includes(search.toString().toLowerCase().trim()))
         } else {

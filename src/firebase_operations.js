@@ -110,8 +110,8 @@ const getDateForSort = () => new Date().toISOString().replace(/T/, ' ').replace(
 
 const getDate = () => {
   const date = new Date(Date().toString());
-  return date.toLocaleString('default',
-    {year: 'numeric', month: 'numeric', day: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric'}
+  return date.toLocaleString('en-GB',
+    {year: 'numeric', month: 'numeric', day: 'numeric', hour: 'numeric', hour12: true, minute: 'numeric', second: 'numeric'}
   );
 }
 
