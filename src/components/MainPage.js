@@ -17,6 +17,9 @@ export default function MainPage() {
     useEffect(() => {
         document.body.style.backgroundImage = ''
         getUsers(setLoadingUsers, setUsers)
+        return() => {
+            setUsers([])
+        }
       },[]) // eslint-disable-line react-hooks/exhaustive-deps
 
     if (loadingUsers) {

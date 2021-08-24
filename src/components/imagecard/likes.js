@@ -24,9 +24,7 @@ const useStyles = makeStyles(() => ({
 }));
 
 export function LikesHeader({onHide, onBack}) {
-
     const classes = useStyles();
-
     return(
         <CardHeader className={classes.header}
             action={
@@ -46,11 +44,11 @@ export function LikesHeader({onHide, onBack}) {
     )
 }
 
-export function LikesContent({post, dimensions}) {
+export function LikesContent({dimensions, likes}) {
     return(
-        <div style={{minWidth: dimensions.width, minHeight: dimensions.height}}>
+        <div style={{minWidth: dimensions.width, minHeight: dimensions.height+20.25}}>
             <List>
-                { post.likes.map((el,i) => {
+                {likes.map((el,i) => {
                     return(
                         <React.Fragment key={i}>
                             <ListItem>

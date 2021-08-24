@@ -19,7 +19,10 @@ export default function AuthorizedView() {
   useEffect(() => {
       document.body.style.backgroundImage = ''
       getPosts(setLoading, setPosts)
-    },[]) // eslint-disable-line react-hooks/exhaustive-deps
+      return() => {
+        setPosts([])
+      }
+    },[]) //eslint-disable-line react-hooks/exhaustive-deps
   
   return(
     <div className="d-grid">

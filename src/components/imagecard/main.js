@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import IconButton from '@material-ui/core/IconButton';
 import CloseIcon from '@material-ui/icons/Close';
@@ -22,6 +22,9 @@ const useStyles = makeStyles((theme) => ({
     },
     comment: {
         padding: '12px 6px 12px 12px'
+    },
+    message: {
+        cursor: 'pointer'
     }
 }));
 
@@ -59,25 +62,23 @@ export function MainHeader({post, onHide}) {
 
 export function Message({post}) {
     return(
-        <Typography color="textPrimary" component="p">
+        <Typography color="textPrimary" variant='subtitle1' component="p">
             {post.message}
         </Typography>
     )
 }
 
-export function MainFooter({post, setCurrentView, onHide, setLoading}) {
+export function MainFooter({post, currentView, setCurrentView, onHide, setLoading, likes, setLikes}) {
     
-    const { currentUser } = useAuth()
-    const [likes, setLikes] = useState([]);
     const classes = useStyles();
+    const { currentUser } = useAuth()
     
     useEffect(() => {
         setLikes(post.likes)
         return () => {
-          setLikes([])
-        }
-      },[post]
-    )
+            setLikes([])
+        }   
+    },[post, setLikes])
 
     function deleteHandler() {
         deletePost(post, setLoading)
@@ -98,9 +99,10 @@ export function MainFooter({post, setCurrentView, onHide, setLoading}) {
                     </IconButton>
                     <Typography
                         color="textPrimary" 
+                        className={classes.message}
                         component="p" 
                         style={{fontWeight: "600"}}
-                        onClick={() => setCurrentView('likes')}
+                        onClick={() => currentView !=='likes' && setCurrentView('likes')}
                     >
                         {likes.length} {likes.length === 1 ? 'Like' : 'Likes'}
                     </Typography>
@@ -109,15 +111,16 @@ export function MainFooter({post, setCurrentView, onHide, setLoading}) {
                         className={classes.comment}
                         aria-label="add to favorites" 
                         style={{color: 'black', marginLeft: '10px'}}
-                        onClick={() => setCurrentView('comments')}
+                        onClick={() => currentView !=='comments' && setCurrentView('comments')}
                     >
                         <CommentIcon/>
                     </IconButton>
                     <Typography 
                         color="textPrimary" 
+                        className={classes.message}
                         component="p" 
                         style={{fontWeight: "600"}}  
-                        onClick={() => setCurrentView('comments')}
+                        onClick={() => currentView !=='comments' && setCurrentView('comments')}
                     >
                         Comments
                     </Typography>
