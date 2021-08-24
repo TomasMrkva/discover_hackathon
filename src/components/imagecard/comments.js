@@ -3,7 +3,6 @@ import { makeStyles, withStyles } from '@material-ui/core/styles';
 import { IconButton, Divider, List, ListItem, ListItemText, ListItemAvatar, 
     Avatar, TextField, CardHeader, ListItemSecondaryAction } from '@material-ui/core';
 import CloseIcon from '@material-ui/icons/Close';
-import { getCommentsByPostId } from '../../firebase_operations';
 import SendIcon from '@material-ui/icons/Send';
 import DeleteIcon from '@material-ui/icons/Delete';
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
@@ -102,11 +101,6 @@ export function CommentsContent({post, dimensions, comments, setComments}) {
     useEffect(() => {
         var e = document.getElementById('content-page');
         e.scrollTop = 0;
-        const unsubscribe = getCommentsByPostId(post.id, setComments)
-        return () => {
-            unsubscribe()
-            setComments([])
-        }
     },[]) // eslint-disable-line react-hooks/exhaustive-deps
 
     function uploadComment() {

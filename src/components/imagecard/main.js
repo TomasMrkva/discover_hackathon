@@ -12,6 +12,8 @@ import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
 import DeleteIcon from '@material-ui/icons/Delete';
 import { addLike, deletePost } from '../../firebase_operations';
 import CommentIcon from '@material-ui/icons/Comment';
+import { getCommentsByPostId } from '../../firebase_operations';
+
 
 const useStyles = makeStyles((theme) => ({
     header: {
@@ -75,9 +77,12 @@ export function MainFooter({post, currentView, setCurrentView, onHide, setLoadin
     
     useEffect(() => {
         setLikes(post.likes)
-        setComments(post.comments)
+        const unsubscribe = getCommentsByPostId(post.id, setComments)
         return () => {
+            unsubscribe()
             setLikes([])
+            setComments([])
+
         }   
     },[post, setLikes, setComments])
 
