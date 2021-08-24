@@ -23,7 +23,7 @@ const useStyles = makeStyles((theme) => ({
         padding: '12px 6px 12px 6px'
     },
     comment: {
-        padding: '12px 6px 12px 12px'
+        padding: '12px 6px 12px 27px'
     },
     message: {
         cursor: 'pointer'
