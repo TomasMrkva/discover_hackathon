@@ -70,7 +70,7 @@ export default function ImageCard({show, onHide, post, setLoading}) {
         { currentView === 'comments' ? <CommentsContent dimensions={dimensions} post={post}/>
         : currentView === 'likes'    ? <LikesContent dimensions={dimensions} likes={likes}/>
         : <img
-              onClick={() => window.open(post.image, "_blank")}
+              onDoubleClick={() => window.open(post.image, "_blank")}
               ref={el => { ref.current = el; setRefVisible(!!el); }}
               style={{ maxWidth: "100%", maxHeight: "100%", objectFit: "contain"}}
               src={post.image}
