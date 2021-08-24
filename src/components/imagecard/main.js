@@ -37,8 +37,9 @@ export function MainHeader({post, onHide}) {
     return(
         <CardHeader className={classes.header}
             avatar={
-                <Avatar aria-label="post">
-                    <img alt="avatar" src={post.author.avatar} style={{width: '100%', height: '100%'}}/>
+                <Avatar aria-label="post" src={post.author.avatar}>
+                    {post.author.name.charAt(0)}
+                    {/* <img alt="avatar" src={post.author.avatar} style={{width: '100%', height: '100%'}}/> */}
                 </Avatar>
             }
             action={

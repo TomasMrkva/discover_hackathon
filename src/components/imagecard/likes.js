@@ -59,8 +59,9 @@ export function LikesContent({dimensions, likes}) {
                         <React.Fragment key={i}>
                             <ListItem>
                                 <ListItemAvatar>
-                                <Avatar>
-                                    <img alt="avatar" src={el.avatar} style={{width: '100%', height: '100%'}}/>
+                                <Avatar alt="avatar" src={el.avatar}>
+                                    {/* <img  style={{width: '100%', height: '100%'}}/> */}
+                                    {el.name.charAt(0)}
                                 </Avatar>
                                 </ListItemAvatar>
                                 <ListItemText primary={el.name} secondary={el.email} />

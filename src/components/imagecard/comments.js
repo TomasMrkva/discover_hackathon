@@ -140,10 +140,10 @@ export function CommentsContent({post, dimensions, comments, setComments}) {
                                 <React.Fragment key={i}>
                                     <ListItem className={classes.listItem}>
                                         <ListItemAvatar>
-                                        <Avatar>
-                                            <img alt="avatar" 
-                                                src={el.author.avatar} 
-                                                style={{width: '100%', height: '100%'}}/>
+                                        <Avatar alt="avatar" src={el.author.avatar} >
+                                            {el.author.name.charAt(0)}
+                                            {/* <img 
+                                                style={{width: '100%', height: '100%'}}/> */}
                                         </Avatar>
                                         </ListItemAvatar>
                                         <ListItemText 
