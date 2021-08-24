@@ -32,7 +32,7 @@ const useStyles = makeStyles(() => ({
 export default function ImageCard({show, onHide, post, setLoading}) {
 
   const classes = useStyles();
-  const ref  = useRef(null)
+  const ref = useRef(null)
   const [dimensions, setDimentions] = useState({})
   const [refVisible, setRefVisible] = useState(false)
   const [currentView, setCurrentView] = useState('main')
@@ -42,6 +42,10 @@ export default function ImageCard({show, onHide, post, setLoading}) {
       if (!refVisible) 
         return
       setDimentions({width: ref.current.clientWidth, height: ref.current.clientHeight})
+      // console.log(ref.current.clientWidth, ref.current.clientHeight)
+      // return () => {
+      //   setDimentions({})
+      // }
   },[refVisible])
 
 

@@ -23,7 +23,7 @@ async function addComment(user, postId, setComments, comment) {
       avatar: user.providerData[0].photoURL
     },
     dateTime: getDate(),
-    comment: comment,
+    comment: comment.trim(),
     id: nanoid()
   }
   try {

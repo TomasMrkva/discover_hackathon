@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { makeStyles, withStyles } from '@material-ui/core/styles';
-import { IconButton, Divider, List, ListItem, ListItemText, 
-    ListItemAvatar, Avatar, TextField, CardHeader } from '@material-ui/core';
+import { IconButton, Divider, List, ListItem, ListItemText, ListItemAvatar, 
+    Avatar, TextField, CardHeader, ListItemSecondaryAction } from '@material-ui/core';
 import CloseIcon from '@material-ui/icons/Close';
 import { getCommentsByPostId } from '../../firebase_operations';
 import SendIcon from '@material-ui/icons/Send';
@@ -9,6 +9,7 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 import { addComment, deleteComment } from '../../firebase_operations';
 import { useAuth } from '../../contexts/AuthContext'
+import Typography from '@material-ui/core/Typography';
 
 const useStyles = makeStyles(() => ({
     header: {
@@ -39,6 +40,14 @@ const useStyles = makeStyles(() => ({
     },
     sendButton: {
         color: 'black'
+    },
+    deleteButton: {
+        paddingBottom: '50px',
+        color: 'black',
+        '&:hover': {
+            color: '#000000a6',
+            backgroundColor: 'rgb(0 0 0 / 0%)'
+        },
     },
     commentText: {
         wordBreak: 'break-word'
@@ -144,14 +153,26 @@ export function CommentsContent({post, dimensions}) {
                                         <ListItemText 
                                             className={classes.commentText}
                                             primary={el.author.name}
-                                            secondary={el.comment}
+                                            // secondary={el.comment}
+                                            secondary={
+                                                <React.Fragment >
+                                                    <Typography style={{textAlign: 'end'}} display='inline' variant="caption">{el.dateTime}</Typography>
+                                                    <Typography component={'span'} display='block' variant="body2">{el.comment}</Typography>
+                                                </React.Fragment>
+                                            }
                                         />
                                         {currentUser.email === el.author.email &&
+                                        <ListItemSecondaryAction>
                                             <IconButton 
-                                                className={classes.sendButton} 
-                                                onClick={() => deleteCommentHandler(el)}>
+                                                disableRipple
+                                                edge="end" 
+                                                aria-label="delete" 
+                                                className={classes.deleteButton} 
+                                                onClick={() => deleteCommentHandler(el)}
+                                            >
                                                 <DeleteIcon />
                                             </IconButton>
+                                        </ListItemSecondaryAction>
                                         }
                                     </ListItem>
                                     <Divider variant="middle" component="li"/>
