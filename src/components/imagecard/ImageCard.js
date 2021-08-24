@@ -25,7 +25,8 @@ const DialogContentText = withStyles((theme) => ({
 
 const useStyles = makeStyles(() => ({
   message: {
-    overflowY: 'clip'
+    overflowY: 'clip',
+    paddinng: '0px'
   }
 }));
 

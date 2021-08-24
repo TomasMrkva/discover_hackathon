@@ -152,12 +152,12 @@ export function CommentsContent({post, dimensions}) {
                                         </ListItemAvatar>
                                         <ListItemText 
                                             className={classes.commentText}
-                                            primary={el.author.name}
+                                            primary={<Typography display='inline' style={{lineHeight: 0, fontWeight: 600}} variant="body1">{el.author.name}</Typography>}
                                             // secondary={el.comment}
                                             secondary={
                                                 <React.Fragment >
-                                                    <Typography style={{textAlign: 'end'}} display='inline' variant="caption">{el.dateTime}</Typography>
-                                                    <Typography component={'span'} display='block' variant="body2">{el.comment}</Typography>
+                                                    <Typography display='inline' variant="caption">{' @ ' + el.dateTime}</Typography>
+                                                    <Typography component={'span'} style={{color: 'black'}} display='block' variant="body2">{el.comment}</Typography>
                                                 </React.Fragment>
                                             }
                                         />
