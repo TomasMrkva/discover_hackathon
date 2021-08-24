@@ -87,7 +87,7 @@ export function MainFooter({post, currentView, setCurrentView, onHide, setLoadin
 
     return(
         <>
-            <div style={{ backgroundColor: 'rgb(255 221 221)' }}>
+            <div style={{ backgroundColor: 'rgb(255 221 221)', paddingLeft: '15px'}}>
                 <CardActions disableSpacing>
                     <IconButton 
                         className={classes.likeDelete} 
