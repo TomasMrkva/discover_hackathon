@@ -23,7 +23,7 @@ export default function LabelBottomNavigation({page, setPage}) {
   };
 
   return (
-    <BottomNavigation style={{height: '80px'}}value={page} onChange={handleChange} className={classes.root}>
+    <BottomNavigation style={{height: '78px'}}value={page} onChange={handleChange} className={classes.root}>
       <BottomNavigationAction label="Posts" value="posts" icon={<ImageIcon />} onClick={() => console.log()}/>
       <BottomNavigationAction label="Leaderboard" value="leaderboard" icon={<EqualizerIcon />} onClick={() => console.log()}/>
     </BottomNavigation>
