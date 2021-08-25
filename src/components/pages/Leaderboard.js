@@ -35,7 +35,7 @@ export default function Leaderboard({posts}){
                                         {el.name.charAt(0)}
                                     </Avatar>
                                     </ListItemAvatar>
-                                    <ListItemText primary={el.name} secondary={el.totalPosts} />
+                                    <ListItemText primary={el.name} secondary={'Number of posts: ' + el.totalPosts} />
                                     { i === 0 ? <img src={'gold.svg'} alt="gold-medal" style={{width: '45px'}}/>    //
                                     : i === 1 ? <img src={'silver.svg'} alt="silver-medal" style={{width: '45px'}}/>    //
                                     : i === 2 ? <img src={'bronze.svg'} alt="bronze-medal" style={{width: '45px'}}/>    //
