@@ -2,7 +2,7 @@ import { SignOut } from "../UserLogin"
 import React from 'react'
 import { useAuth } from '../../contexts/AuthContext'
 
-export default function UnAuthorizedView() {
+export default function UnAuthorized() {
 
   const { currentUser } = useAuth()
 

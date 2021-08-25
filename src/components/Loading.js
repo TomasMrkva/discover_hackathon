@@ -15,7 +15,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-export default function Loading() {
+export default function Loading(props) {
 
   const classes = useStyles();
 

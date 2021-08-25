@@ -1,6 +1,6 @@
 import React from 'react'
 import './css/App.css';
-import MainPage from './components/MainPage'
+import AuthorizationWall from './AuthorizationWall'
 import PriavateRoute from './components/PrivateRoute'
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import { AuthProvider } from './contexts/AuthContext'
@@ -12,7 +12,7 @@ export default function App() {
       <AuthProvider>
         <Switch>
           <Route exact path='/signup' component={SignIn}></Route>
-          <PriavateRoute exact path='/' component={MainPage}></PriavateRoute>
+          <PriavateRoute exact path='/' component={AuthorizationWall}></PriavateRoute>
         </Switch>
       </AuthProvider>
   </Router>

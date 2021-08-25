@@ -65,7 +65,7 @@ export function MainHeader({post, onHide}) {
 
 export function Message({post}) {
     return(
-        <Typography color="textPrimary" variant='subtitle1' component="p">
+        <Typography color="textPrimary" style={{ lineHeight: 1.5 }} variant="subtitle1" gutterBottom>
             {post.message}
         </Typography>
     )

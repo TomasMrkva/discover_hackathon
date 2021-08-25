@@ -61,30 +61,33 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function SearchAppBar({search, setSearch, ...props}) {
+export default function SearchAppBar({search, setSearch, showSearch, ...props}) {
 
   const classes = useStyles();
   const { currentUser } = useAuth()
 
   return (
     <div className={classes.root}>
-      <AppBar style={{backgroundImage:'linear-gradient(-20deg, rgb(183, 33, 255) 0%, rgb(33, 212, 253) 100%)'}}>
+      <AppBar style={{backgroundColor: 'black'}}>
         <Toolbar>
           <SignOut/>
           <Typography className={classes.title} variant="h6" noWrap>
-            Hi {currentUser.displayName}
+            Hi, {currentUser.displayName}
           </Typography>
-          <div className={classes.search}>
-            <div className={classes.searchIcon}>
-              <SearchIcon />
+          {
+            showSearch &&
+            <div className={classes.search}>
+              <div className={classes.searchIcon}>
+                <SearchIcon />
+              </div>
+              <InputBase 
+                placeholder="Search…"
+                classes={{ root: classes.inputRoot, input: classes.inputInput}}
+                onChange={(event) => setSearch(event.target.value)}
+                value={search}
+              />
             </div>
-            <InputBase 
-              placeholder="Search…"
-              classes={{ root: classes.inputRoot, input: classes.inputInput}}
-              onChange={(event) => setSearch(event.target.value)}
-              value={search}
-            />
-          </div>
+          }
         </Toolbar>
       </AppBar>
       <Toolbar/>

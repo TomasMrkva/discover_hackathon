@@ -1,7 +1,7 @@
  import firebase from './firebase'
  import { nanoid } from 'nanoid'
 
-export {getPosts, getUsers, addPost, deletePost, addLike, getCommentsByPostId, addComment, deleteComment}
+export {getPosts, getUsers, addPost, deletePost, addLike, getCommentsByPostId, addComment, deleteComment, getRankings}
 
 const dbPosts =  firebase.firestore().collection('posts')
 const authorizedUsers = firebase.firestore().collection('users')
@@ -65,15 +65,40 @@ function getPosts(setLoading, setPosts) {
 }
 
 function getUsers(setLoadingUsers, setUsers) {
-  setLoadingUsers(true)
+  setLoadingUsers && setLoadingUsers(true)
   authorizedUsers.get().then((querySnapshot) => {
     const items = []
     querySnapshot.forEach((doc) => {
       items.push(doc.data().email)
     });
     setUsers(items)
-    setLoadingUsers(false)
+    setLoadingUsers && setLoadingUsers(false)
   });
+}
+
+function getRankings(setLoading, posts, setRankings) {
+  setLoading(true)
+  const users = []
+  authorizedUsers.get().then((querySnapshot) => {
+    querySnapshot.forEach((doc) => {
+      users.push({email: doc.data().email})
+    });
+  }).then(() => {
+    const rankings = users.map(user => {
+      const foundUser = posts.find(p => p.author.email === user.email)
+      return {
+        name: foundUser?.author.name,
+        totalPosts: posts.filter(post => post.author.email === user.email).length,
+        avatar: foundUser?.author.avatar,
+      }
+    })
+    .filter(el => el.name !== undefined)
+    .sort((a, b) => {
+      return b.totalPosts - a.totalPosts
+    })
+    setRankings(rankings)
+    setLoading(false)
+  })
 }
 
 async function addPost(message, imgData, setLoading, currentUser) {

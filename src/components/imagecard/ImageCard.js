@@ -13,20 +13,10 @@ const DialogContent = withStyles((theme) => ({
   },
 }))(MuiDialogContent);
 
-const DialogContentText = withStyles((theme) => ({
-  root: {
-    paddingTop: '15px',
-    paddingLeft: '15px',
-    paddingRight: '15px',
-    paddingBottom: '15px',
-    textAlign: 'justify'
-  }
-}))(MuiDialogContent);
-
 const useStyles = makeStyles(() => ({
   message: {
     overflowY: 'clip',
-    paddinng: '0px'
+    padding: '8px 15px 6px 15px'
   }
 }));
 
@@ -80,12 +70,12 @@ export default function ImageCard({show, onHide, post, setLoading}) {
         }
       </DialogContent>
 
-      <DialogContentText className={classes.message}>
+      <div className={classes.message}>
         { currentView === 'comments' ? null 
         : currentView === 'likes'    ? null 
         : <Message post={post} />
         }
-      </DialogContentText>
+      </div>
 
       <MainFooter 
         comments={comments}

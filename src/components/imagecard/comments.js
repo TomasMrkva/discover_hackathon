@@ -93,7 +93,6 @@ export function CommentsHeader({onHide, onBack}) {
 
 export function CommentsContent({post, dimensions, comments, setComments}) {
 
-    // const [comments, setComments] = useState();
     const [typedComment, setTypedComment] = useState('');
     const classes = useStyles();
     const { currentUser } = useAuth()
@@ -116,8 +115,7 @@ export function CommentsContent({post, dimensions, comments, setComments}) {
 
     return(
         <div style={{minWidth: dimensions.width, minHeight: dimensions.height+20.25}}>
-            {comments === undefined ? 
-                null :
+            { comments !== undefined &&
                 <>
                     <div className={classes.addComment}>
                         <CssTextField
@@ -142,14 +140,11 @@ export function CommentsContent({post, dimensions, comments, setComments}) {
                                         <ListItemAvatar>
                                         <Avatar alt="avatar" src={el.author.avatar} >
                                             {el.author.name.charAt(0)}
-                                            {/* <img 
-                                                style={{width: '100%', height: '100%'}}/> */}
                                         </Avatar>
                                         </ListItemAvatar>
                                         <ListItemText 
                                             className={classes.commentText}
                                             primary={<Typography display='inline' style={{lineHeight: 0, fontWeight: 600}} variant="body1">{el.author.name}</Typography>}
-                                            // secondary={el.comment}
                                             secondary={
                                                 <React.Fragment >
                                                     <Typography display='inline' variant="caption">{' @ ' + el.dateTime}</Typography>

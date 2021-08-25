@@ -6,7 +6,7 @@ import AddIcon from '@material-ui/icons/Add';
 const useStyles = makeStyles(theme => ({
     fab: {
       position: 'fixed',
-      bottom: theme.spacing(2),
+      bottom: theme.spacing(9),
       right: theme.spacing(2),
     },
   }));
@@ -16,7 +16,7 @@ const useStyles = makeStyles(theme => ({
 export default function FabButton({clickHandler}) {
     const classes = useStyles();
     return (
-        <Fab variant="extended" style={{backgroundColor: 'black', color: 'white'}} aria-label="add" className={classes.fab} onClick={clickHandler} elevation={4}>
+        <Fab variant="extended" style={{background: 'linear-gradient(-20deg, rgb(183, 33, 255) 0%, rgb(33, 212, 253) 100%)', color: 'white'}} aria-label="add" className={classes.fab} onClick={clickHandler} elevation={4}>
             New Post
             <AddIcon style={{marginLeft: '5px'}}/>
         </Fab>

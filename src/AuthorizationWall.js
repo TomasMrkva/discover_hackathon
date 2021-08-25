@@ -1,12 +1,12 @@
-import { useAuth } from "../contexts/AuthContext"
-import AuthorizedView from "./views/AuthorizedView"
-import UnauthorizedView from "./views/UnAuthorizedView"
-import { getUsers } from "../firebase_operations";
-import Loading from "./Loading";
+import { useAuth } from "./contexts/AuthContext"
+import Skeleton from "./components/pages/Skeleton"
+import Unauthorized from "./components/pages/Unauthorized"
+import { getUsers } from "./firebase_operations";
+import Loading from "./components/Loading";
 import React, { useState, useEffect } from 'react'
 
 
-export default function MainPage() {
+export default function AuthorizationWall() {
     
     const [loadingUsers, setLoadingUsers] = useState(true); 
     const [users, setUsers] = useState([])
@@ -27,6 +27,6 @@ export default function MainPage() {
     }
 
     return (
-        users.includes(currentUser.email) ? <AuthorizedView/> : <UnauthorizedView/>
+        users.includes(currentUser.email) ? <Skeleton/> : <Unauthorized/>
     )
 }
