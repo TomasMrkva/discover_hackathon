@@ -13,10 +13,13 @@ const DialogContent = withStyles((theme) => ({
   },
 }))(MuiDialogContent);
 
+const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+
 const useStyles = makeStyles(() => ({
   message: {
     overflowY: 'clip',
-    padding: '8px 15px 6px 15px'
+    padding: '8px 15px 0px 15px',
+    paddingBottom: isMobile ? '6px' : '17px'
   }
 }));
 

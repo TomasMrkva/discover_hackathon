@@ -16,8 +16,8 @@ export default function Leaderboard({posts}){
         }
     },[posts])
 
-    return(
-        <div style={{paddingBottom: '50px'}}>
+    return (
+        <div style={{paddingBottom: '75px'}}>
             <Container style={{textAlign: 'center', paddingLeft: 0, paddingRight: 0}}>
                 <Typography style={{padding: '35px'}}variant="h4" component="h2">Leaderboard</Typography>
                 <img src={'trophy.svg'} alt='trophy' style={{width: 'auto', height: '15vh', paddingBottom: '5vh'}}/>

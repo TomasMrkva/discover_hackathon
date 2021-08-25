@@ -18,7 +18,7 @@ export default function Collage({posts, search, setModalShow, setPopupData}) {
     }
 
     return(
-      <div className="search-container">
+      <div className="search-container" style={{paddingBottom: '78px'}}>
         { 
           posts.map((post,i) => containsValue(post) && <Image key={i} post={post} imageClick={imageClick} />)
         }
