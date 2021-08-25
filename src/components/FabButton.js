@@ -6,7 +6,7 @@ import AddIcon from '@material-ui/icons/Add';
 const useStyles = makeStyles(theme => ({
     fab: {
       position: 'fixed',
-      bottom: theme.spacing(10.3),
+      bottom: theme.spacing(9.2),
       right: theme.spacing(2),
     },
   }));
