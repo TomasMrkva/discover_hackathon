@@ -90,12 +90,17 @@ function getRankings(setLoading, posts, setRankings) {
         name: foundUser?.author.name,
         totalPosts: posts.filter(post => post.author.email === user.email).length,
         avatar: foundUser?.author.avatar,
+        totalLikes: posts
+          .filter(post => post.author.email === user.email)
+          .map(post => post.likes.length)
+          .reduce((a, b) => a + b, 0),
+        // totalComments: posts
+        // .filter(post => post.author.email === user.email)
+        // .map(post => post.comments.length)
+        // .reduce((a, b) => a + b, 0)
       }
     })
     .filter(el => el.name !== undefined)
-    .sort((a, b) => {
-      return b.totalPosts - a.totalPosts
-    })
     setRankings(rankings)
     setLoading(false)
   })
