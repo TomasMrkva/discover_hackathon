@@ -1,11 +1,17 @@
 import React from 'react'
 import Image from './Image'
 
-export default function Collage({posts, search, setModalShow, setPopupData}) {
+export default function Gallery({posts, setPosts, search, setModalShow, setPopupData, setCurrentView}) {
 
     const imageClick = (post) => {
         setModalShow(true)
         setPopupData(post)
+    }
+
+    const commentClick = (post) => {
+      setModalShow(true)
+      setPopupData(post)
+      setCurrentView('comments')
     }
 
     function containsValue(post) {
@@ -20,7 +26,7 @@ export default function Collage({posts, search, setModalShow, setPopupData}) {
     return(
       <div className="search-container" style={{paddingBottom: '78px'}}>
         { 
-          posts.map((post,i) => containsValue(post) && <Image key={i} post={post} imageClick={imageClick} />)
+          posts.map((post,i) => containsValue(post) && <Image key={i} setPosts={setPosts} post={post} posts={posts} imageClick={imageClick} commentClick={commentClick}/>)
         }
       </div>
     )

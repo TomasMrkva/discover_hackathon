@@ -13,30 +13,26 @@ const DialogContent = withStyles((theme) => ({
   },
 }))(MuiDialogContent);
 
-const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
-
 const useStyles = makeStyles(() => ({
   message: {
-    overflowY: 'clip',
-    padding: '8px 15px 0px 15px',
-    paddingBottom: isMobile ? '6px' : '17px'
+    padding: '0px 10px 5px 10px',
   }
 }));
 
-export default function ImageCard({show, onHide, post, setLoading}) {
+export default function ImageCard({show, onHide, post, setLoading, currentView, setCurrentView, setNewComments}) {
 
   const classes = useStyles();
   const ref = useRef(null)
   const [dimensions, setDimentions] = useState({})
   const [refVisible, setRefVisible] = useState(false)
-  const [currentView, setCurrentView] = useState('main')
   const [likes, setLikes] = useState([])
   const [comments, setComments] = useState()
 
   useEffect(() => {
-      if (!refVisible) 
+      if (!refVisible) {
         return
-      setDimentions({width: ref.current.clientWidth, height: ref.current.clientHeight})
+      } 
+      setDimentions({width: ref?.current.clientWidth, height: ref?.current.clientHeight})
       // console.log(ref.current.clientWidth, ref.current.clientHeight)
       // return () => {
       //   setDimentions({})
@@ -60,27 +56,29 @@ export default function ImageCard({show, onHide, post, setLoading}) {
       : currentView === 'likes'    ? <LikesHeader onHide={hide} onBack={onBack}/>
       : <MainHeader post={post} onHide={hide}/>}
       
-      <DialogContent id="content-page">
-        { currentView === 'comments' ? <CommentsContent dimensions={dimensions} post={post} comments={comments} setComments={setComments}/>
-        : currentView === 'likes'    ? <LikesContent dimensions={dimensions} likes={likes}/>
-        : <img
-              onDoubleClick={() => window.open(post.image, "_blank")}
-              ref={el => { ref.current = el; setRefVisible(!!el); }}
-              style={{ maxWidth: "100%", maxHeight: "100%", objectFit: "contain"}}
-              src={post.image}
-              alt=""
-          />
-        }
-      </DialogContent>
-
       <div className={classes.message}>
         { currentView === 'comments' ? null 
         : currentView === 'likes'    ? null 
         : <Message post={post} />
         }
       </div>
+      <DialogContent id="content-page">
+        { currentView === 'comments' ? <CommentsContent dimensions={dimensions} post={post} comments={comments} setComments={setComments} setNewComments={setNewComments}/>
+        : currentView === 'likes' ? <LikesContent dimensions={dimensions} likes={likes}/>
+        : <img
+              onDoubleClick={() => window.open(post.image, "_blank")}
+              ref={el => { ref.current = el; setRefVisible(!!el); }}
+              style={{ maxWidth: "100%", maxHeight: "90%", objectFit: "contain"}}
+              src={post.image}
+              alt=""
+          />
+        }
+        {/* <div className={classes.message}>
 
-      <MainFooter 
+      </div> */}
+      </DialogContent>
+
+      <MainFooter
         comments={comments}
         setComments={setComments}
         likes={likes}

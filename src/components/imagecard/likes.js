@@ -44,6 +44,10 @@ export function LikesHeader({onHide, onBack}) {
     )
 }
 
+
+const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+
+
 export function LikesContent({dimensions, likes}) {
 
     useEffect(() =>{
@@ -52,7 +56,7 @@ export function LikesContent({dimensions, likes}) {
     },[])
 
     return(
-        <div style={{minWidth: dimensions.width, minHeight: dimensions.height+20.25}}>
+        <div style={{minWidth: isMobile ? dimensions.width || '100vw' : '50vw', minHeight: dimensions.height+20.25 || '95vh'}}>
             <List>
                 {likes.map((el,i) => {
                     return(

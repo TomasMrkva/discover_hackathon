@@ -1,24 +1,36 @@
 import React, { useState } from 'react'
 import ImageCard from '../imagecard/ImageCard'
-import Collage from '../Collage'
+import Gallery from '../Gallery'
 import AddPost from '../AddPost';
 import Loading from '../Loading'
 import FabButton from '../FabButton'
 
-export default function Posts({posts, loading, setLoading, search, setSearch}) {
+export default function Posts({posts, setPosts, loading, setLoading, search, setSearch, currentView, setCurrentView}) {
   const [modalShow, setModalShow] = useState(false);
   const [newPostShow, setNewPostShow] = useState(false);
-  const [popupData, setPopupData] = useState(null);  
+  const [popupData, setPopupData] = useState(null);
+
   return(
     <div className="d-grid">
         {/* <SearchAppBar search={search} setSearch={setSearch}/> */}
-        { loading ? <Loading/> : <Collage search={search} posts={posts} setModalShow={setModalShow} setPopupData={setPopupData}/> }
+        { loading ? <Loading/> 
+        : <Gallery 
+            search={search} 
+            posts={posts}
+            setPosts={setPosts} 
+            setModalShow={setModalShow} 
+            setPopupData={setPopupData} 
+            setCurrentView={setCurrentView}
+          /> 
+        }
         { popupData && 
           <ImageCard
-                 show={modalShow} 
-                 onHide={() => setModalShow(false)} 
-                 post={popupData} 
-                 setLoading={setLoading}
+            show={modalShow} 
+            onHide={() => setModalShow(false)} 
+            post={popupData} 
+            setLoading={setLoading}
+            currentView={currentView}
+            setCurrentView={setCurrentView}
           />
         }
         { newPostShow && 

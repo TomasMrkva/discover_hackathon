@@ -1,7 +1,7 @@
  import firebase from './firebase'
  import { nanoid } from 'nanoid'
 
-export {getPosts, getUsers, addPost, deletePost, addLike, getCommentsByPostId, addComment, deleteComment, getRankings}
+export {getPosts, getUsers, addPost, deletePost, addLike, getCommentsByPostId, addComment, deleteComment, getRankings, seenComments}
 
 const dbPosts =  firebase.firestore().collection('posts')
 const authorizedUsers = firebase.firestore().collection('users')
@@ -14,6 +14,7 @@ function getCommentsByPostId(postId, setComments) {
   return unsubscribe
 }
 
+
 async function addComment(user, postId, setComments, comment) {
   const postRef = dbPosts.doc(postId);
   const contents = {
@@ -24,7 +25,8 @@ async function addComment(user, postId, setComments, comment) {
     },
     dateTime: getDate(),
     comment: comment.trim(),
-    id: nanoid()
+    id: nanoid(),
+    seen: [user.email]
   }
   try {
     await firebase.firestore().runTransaction(async transaction => {
@@ -51,6 +53,25 @@ async function deleteComment(commentToDelete, postId) {
   })
 }
 
+// function seenComments(postId, user) {
+//   dbPosts.doc(postId).update({
+//     seen: firebase.firestore.FieldValue.arrayUnion(user.email)
+//   })
+// }
+
+async function seenComments(postId, user) {
+  const postRef = dbPosts.doc(postId);
+  try {
+    await firebase.firestore().runTransaction(async transaction => {
+      const doc = await transaction.get(postRef);
+      if (doc.data().comments) {
+          let totalComments = doc.data().comments;
+          totalComments.forEach(comment => comment.seen ? comment.seen.indexOf(user.email) === -1 && comment.seen.push(user.email) : comment.seen = [user.email])
+          transaction.update(postRef, { comments: totalComments });
+      }
+    })
+  } catch (error) {console.log(error)}
+}
 
 function getPosts(setLoading, setPosts) {
   setLoading(true)

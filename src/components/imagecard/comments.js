@@ -6,7 +6,7 @@ import CloseIcon from '@material-ui/icons/Close';
 import SendIcon from '@material-ui/icons/Send';
 import DeleteIcon from '@material-ui/icons/Delete';
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
-import { addComment, deleteComment } from '../../firebase_operations';
+import { addComment, deleteComment, seenComments } from '../../firebase_operations';
 import { useAuth } from '../../contexts/AuthContext'
 import Typography from '@material-ui/core/Typography';
 
@@ -57,6 +57,9 @@ const useStyles = makeStyles(() => ({
     }
 }));
 
+const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+
+
 const CssTextField = withStyles({
     root: {
       '& label.Mui-focused': {
@@ -91,13 +94,14 @@ export function CommentsHeader({onHide, onBack}) {
     )
 }
 
-export function CommentsContent({post, dimensions, comments, setComments}) {
+export function CommentsContent({post, dimensions, comments, setComments, setNewComments}) {
 
     const [typedComment, setTypedComment] = useState('');
     const classes = useStyles();
     const { currentUser } = useAuth()
 
     useEffect(() => {
+        seenComments(post.id, currentUser)
         var e = document.getElementById('content-page');
         e.scrollTop = 0;
     },[]) // eslint-disable-line react-hooks/exhaustive-deps
@@ -114,9 +118,9 @@ export function CommentsContent({post, dimensions, comments, setComments}) {
     }
 
     return(
-        <div style={{minWidth: dimensions.width, minHeight: dimensions.height+20.25}}>
+        <div style={{minWidth: isMobile ? dimensions.width || '100vw' : '50vw', minHeight: dimensions.height+20.25 || '95vh'}}>
             { comments !== undefined &&
-                <>
+                <div style={{textAlign: 'center'}}>
                     <div className={classes.addComment}>
                         <CssTextField
                             className={classes.textField}
@@ -171,7 +175,7 @@ export function CommentsContent({post, dimensions, comments, setComments}) {
                             )
                         })}
                     </List>
-                </>
+                </div>
             }
         </div>
     )

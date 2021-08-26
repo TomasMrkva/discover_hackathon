@@ -11,6 +11,7 @@ export default function Skeleton() {
     const [posts, setPosts] = useState([]);
     const [loading, setLoading] = useState(true)
     const [search, setSearch] = useState('');
+    const [currentView, setCurrentView] = useState('main')
 
     useEffect(() => {
         document.body.style.backgroundImage = ''
@@ -24,7 +25,16 @@ export default function Skeleton() {
         <>
             <SearchAppBar search={search} setSearch={setSearch} showSearch={page === 'posts'}/>
             { page === 'posts' ? 
-                <Posts posts={posts} loading={loading} setLoading={setLoading} search={search} setSearch={setSearch}/>
+                <Posts 
+                    posts={posts}
+                    setPosts={setPosts} 
+                    loading={loading} 
+                    setLoading={setLoading} 
+                    search={search} 
+                    setSearch={setSearch} 
+                    currentView={currentView} 
+                    setCurrentView={setCurrentView}
+                />
             : !loading && 
                 <Leaderboard posts={posts}/>
             }

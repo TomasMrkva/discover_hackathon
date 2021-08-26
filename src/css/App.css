@@ -11,6 +11,10 @@
   flex-grow: 2
 }
 
+.MuiImageListItemBar-title {
+  font-size: 0.85rem !important;
+}
+
 .MuiTypography-h6 {
   font-size: 1.1rem !important
 }

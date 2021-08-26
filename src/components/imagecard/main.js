@@ -37,7 +37,7 @@ export function MainHeader({post, onHide}) {
     return(
         <CardHeader className={classes.header}
             avatar={
-                <Avatar aria-label="post" src={post.author.avatar}>
+                <Avatar aria-label="post" src={post.author.avatar} onClick={() => console.log('hello')}>
                     {post.author.name.charAt(0)}
                     {/* <img alt="avatar" src={post.author.avatar} style={{width: '100%', height: '100%'}}/> */}
                 </Avatar>
@@ -65,7 +65,7 @@ export function MainHeader({post, onHide}) {
 
 export function Message({post}) {
     return(
-        <Typography color="textPrimary" style={{ lineHeight: 1.5 }} variant="subtitle1" gutterBottom>
+        <Typography color="textPrimary" style={{ lineHeight: 1.5 }} variant="body2">
             {post.message}
         </Typography>
     )
