@@ -15,7 +15,7 @@ const DialogContent = withStyles((theme) => ({
 
 const useStyles = makeStyles(() => ({
   message: {
-    padding: '0px 10px 5px 10px',
+    padding: '0px 10px 5px 15px',
   }
 }));
 
