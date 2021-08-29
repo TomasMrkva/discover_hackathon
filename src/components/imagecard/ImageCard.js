@@ -49,8 +49,11 @@ export default function ImageCard({show, onHide, post, setLoading, currentView, 
     setCurrentView('main')
   }
 
+  // const fullScreen = useMediaQuery(theme.breakpoints.down(''));
+
+
   return (
-    <Dialog PaperProps={ { style: { margin: 0, maxHeight: '100%' }} } open={show}  onClose={onHide} maxWidth='md'>
+    <Dialog PaperProps={ { style: { margin: 0, maxHeight: '100%', height: '100%'} } } open={show}  onClose={onHide} maxWidth='md'>
       
       { currentView === 'comments' ? <CommentsHeader onHide={hide} onBack={onBack}/>
       : currentView === 'likes'    ? <LikesHeader onHide={hide} onBack={onBack}/>
@@ -68,7 +71,7 @@ export default function ImageCard({show, onHide, post, setLoading, currentView, 
         : <img
               onDoubleClick={() => window.open(post.image, "_blank")}
               ref={el => { ref.current = el; setRefVisible(!!el); }}
-              style={{ maxWidth: "100%", maxHeight: "90%", objectFit: "contain"}}
+              style={{ maxWidth: "100%", objectFit: "cover", display: 'flex'}}
               src={post.image}
               alt=""
           />

@@ -84,10 +84,10 @@ export function CommentsHeader({onHide, onBack}) {
             }
             title={ 
                 <> 
-                    <IconButton aria-label="back" onClick={onBack}>
+                    <IconButton style={{paddingTop: 7.3}} aria-label="back" onClick={onBack}>
                         <ArrowBackIosIcon style={{color: 'black'}}/>
                     </IconButton>
-                    Comments
+                        Comments
                 </> 
             }
         />
