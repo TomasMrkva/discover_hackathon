@@ -1,3 +1,3 @@
-# Very nice posts app
+# Private memories/very nice posts app
 This application was first made as a small hackaton project during a hackaton for interns at Discover for interns to share their best moments, afterwards the idea was transformed into a private (google OAuth + server Authorization), social media webapp, that could be used within a circle of friends to share our memories together, add comments, likes...
 ### Available at: https://very-nice-posts.netlify.app/
