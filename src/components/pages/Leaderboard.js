@@ -107,7 +107,7 @@ export default function Leaderboard({posts}){
                                     : null
                                     }
                                 </ListItem>
-                                {i > Object.keys(leaders).map(key => leaders[key].length).reduce((a, b) => a + b) && <Divider variant="middle" component="li"/>}
+                                {i >= Object.keys(leaders).map(key => leaders[key].length).reduce((a, b) => a + b) && <Divider variant="middle" component="li"/>}
                             </React.Fragment>
                         )
                     })}
